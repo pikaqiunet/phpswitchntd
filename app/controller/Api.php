@@ -33,30 +33,30 @@ class Api
             if ($MsgType == "text") {
                 //查询数据库业务逻辑
                 $result = Db::table('wp_posts')->where('post_title', 'like', '%' . $Content . '%')->select();
-                $newResult=[];
-                foreach ($result as $value) {  
+                $newResult = [];
+                foreach ($result as $value) {
                     //根据文章id，查询meta_key=cao_pwd;meta_key=cao_downurl
-                    $url=Db::table('wp_postmeta')->where(["post_id"=>$value["ID"],"meta_key"=>"cao_downurl"])->find(); 
-                    $code=Db::table('wp_postmeta')->where(["post_id"=>$value["ID"],"meta_key"=>"cao_pwd"])->find(); 
-                    
-                    $value["cao_downurl"] = $url["meta_value"]??'';
-                    $value["cao_pwd"] = $code["meta_value"]??'';
-                    $newResult[]=$value;
+                    $url = Db::table('wp_postmeta')->where(["post_id" => $value["ID"], "meta_key" => "cao_downurl"])->find();
+                    $code = Db::table('wp_postmeta')->where(["post_id" => $value["ID"], "meta_key" => "cao_pwd"])->find();
+
+                    $value["cao_downurl"] = $url["meta_value"] ?? '';
+                    $value["cao_pwd"] = $code["meta_value"] ?? '';
+                    $newResult[] = $value;
                 }
                 //print_r($newResult);
-                $caolianjie='';
-                foreach ($newResult as $key=> $value) {
-                    if ($key==1) {
-                        $title=$value["post_title"];
-                        $id=$value["ID"];
-                        $url="https://www.switchntd.com/".$id.".html";
+                $caolianjie = '';
+                foreach ($newResult as $key => $value) {
+                    if ($key == 1) {
+                        $title = $value["post_title"];
+                        $id = $value["ID"];
+                        $url = "'"."https://www.switchntd.com/" . $id . ".html"."'";
 
-                        $caolianjie=$key.":"." <a href=".$url.">".$title."</a> ";
-                    }else{
-                        $title=$value["post_title"];
-                        $id=$value["ID"];
-                        $url="https://www.switchntd.com/".$id.".html";
-                        $caolianjie.=" $key ".":"." <a href=".$url.">".$title."</a> ";
+                        $caolianjie = $key .":" ."<a href=".$url.">".$title."</a>". "\n";
+                    } else {
+                        $title = $value["post_title"];
+                        $id = $value["ID"];
+                        $url =  "'"."https://www.switchntd.com/" . $id . ".html"."'";
+                        $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> ". "\n";
                     }
                 }
                 return json_encode([
@@ -64,7 +64,7 @@ class Api
                     "FromUserName" => $ToUserName,
                     "CreateTime" => $CreateTime,
                     "MsgType" => $MsgType,
-                    "Content" => "“" . $Content . "”" . "的查询结果：" ."<br>". $caolianjie           
+                    "Content" => "“" . $Content . "”" . "的查询结果：" . "\n" . $caolianjie
                 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
             } else {
                 return json([
