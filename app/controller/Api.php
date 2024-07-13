@@ -26,7 +26,7 @@ class Api
                 "FromUserName" => $ToUserName,
                 "CreateTime" => $CreateTime,
                 "MsgType" => $MsgType,
-                "Content" => "回复：" . $Content
+                "Content" => "回复：" . $Content.'www.switchntd.com'
             ]);
         }
     }
