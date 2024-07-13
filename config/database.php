@@ -24,15 +24,15 @@ return [
             // 数据库类型
             'type' => 'mysql',
             // 服务器地址
-            'hostname' => preg_split('/:/',getenv('MYSQL_ADDRESS'))[0],
+            'hostname' => 'localhost',
             // 服务器端口
-            'hostport' =>  preg_split('/:/',getenv('MYSQL_ADDRESS'))[1],
+            'hostport' => '3306',
             // 用户名
-            'username' => getenv('MYSQL_USERNAME'),
+            'username' => 'root',
             // 密码
-            'password' => getenv('MYSQL_PASSWORD'),
+            'password' => 'w13637312022',
             // 数据库名
-            'database' => (getenv('MYSQL_DATABASE') == null) ? 'thinkphp_demo' : getenv('MYSQL_DATABASE'),
+            'database' => 'switchntd',
             // 数据库连接参数
             'params' => [],
             // 数据库编码默认采用utf8

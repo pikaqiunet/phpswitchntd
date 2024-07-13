@@ -21,6 +21,7 @@ use think\facade\Log;
 use think\Request;
 use think\facade\View;
 use think\Request as ThinkRequest;
+use think\response\Redirect;
 
 class Index
 {
@@ -31,18 +32,21 @@ class Index
      */
     public function index(Request $request)
     {
-
+        View::assign('flag', false);
+        $id = $request->param("id") ?? "";
+        View::assign('id', $id);
         if ($request->isPost()) {
-            # 用来验证
-
-
-
+            $code = $request->param("code") ?? "";
+            $id = $request->param("id") ?? "";
+            //验证code是否为真，如果为真，flag设为true 并且根据id返回资源链接，名称，密码
+            $sqlcode = Db::table('wp_options')->where(["option_name" => "site-content"])->find();
+            if (strtolower(trim($code)) == strtolower(trim($sqlcode["option_value"]))) {
+                View::assign('flag', true);
+                $result = Db::table('wp_posts')->where('ID', $id)->find();
+                View::assign('post_title', $result["post_title"]);
+                View::assign('id', $result["ID"]);
+            }
         }
-
-        # html路径: ../view/index.html
         return View::fetch();
-
-        
     }
-
 }

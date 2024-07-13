@@ -58,7 +58,8 @@ class Api
                     if ($key < 8) {
                         $title = $value["post_title"];
                         $id = $value["ID"];
-                        $url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
+                        //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
+                        $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id. "'";
                         $key = $key + 1;
                         $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
                     }
