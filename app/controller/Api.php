@@ -44,7 +44,7 @@ class Api
                     $newResult[] = $value;
                 }
                 //print_r($newResult);
-                if (count($newResult)==0) {
+                if (count($newResult) == 0) {
                     return json([
                         "ToUserName" => $FromUserName,
                         "FromUserName" => $ToUserName,
@@ -55,20 +55,20 @@ class Api
                 }
                 $caolianjie = '';
                 foreach ($newResult as $key => $value) {
-            
+                    if ($key < 8) {
                         $title = $value["post_title"];
                         $id = $value["ID"];
                         $url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
-                        $key=$key+1;
+                        $key = $key + 1;
                         $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
-                   
+                    }
                 }
                 return json_encode([
                     "ToUserName" => $FromUserName,
                     "FromUserName" => $ToUserName,
                     "CreateTime" => $CreateTime,
                     "MsgType" => $MsgType,
-                    "Content" => "“" . $Content . "”" . "的查询结果：" . "\n" . $caolianjie
+                    "Content" => "“" . $Content . "”" . "的查询结果(只显示前8条结果，更多资源请访问网站查询)：" . "\n" . $caolianjie
                 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
             } else {
                 return json([
