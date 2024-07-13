@@ -7,8 +7,9 @@ class Api
 
     public function message(Request $request){
         
-        
+        Log::write('post前');
         if($request->isPost()){
+            Log::write('post后');
             $data=$request->getInput();
             $obj=json_decode($data);
             $ToUserName=$obj->ToUserName;
