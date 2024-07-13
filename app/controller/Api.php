@@ -31,12 +31,6 @@ class Api
             $MsgType = $obj->MsgType;
             $Content = $obj->Content;
             if ($MsgType == "text") {
-
-
-
-
-
-
                 //查询数据库业务逻辑
                 $result = Db::table('wp_posts')->where('post_title', 'like', '%' . $Content . '%')->select();
                 $newResult=[];
@@ -57,12 +51,12 @@ class Api
                         $id=$value["ID"];
                         $url="https://www.switchntd.com/".$id.".html";
 
-                        $caolianjie=$key.":"."<a href='.$url.'>".$title."</a>"."<br>";
+                        $caolianjie=$key.":"." <a href=".$url.">".$title."</a> ";
                     }else{
                         $title=$value["post_title"];
                         $id=$value["ID"];
                         $url="https://www.switchntd.com/".$id.".html";
-                        $caolianjie.="$key".":"."<a href='.$url.'>".$title."</a>"."<br>";
+                        $caolianjie.=" $key ".":"." <a href=".$url.">".$title."</a> ";
                     }
                 }
                 return json_encode([
