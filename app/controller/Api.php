@@ -68,7 +68,7 @@ class Api
                     "FromUserName" => $ToUserName,
                     "CreateTime" => $CreateTime,
                     "MsgType" => $MsgType,
-                    "Content" => "“" . $Content . "”" . "的查询结果(只显示前8条结果，更多资源请访问网站查询)：" . "\n" . $caolianjie
+                    "Content" => "“" . $Content . "”" . "的查询结果(只显示前8条结果，更多资源请在网站中搜索)：" . "\n" . $caolianjie
                 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
             } else {
                 return json([
