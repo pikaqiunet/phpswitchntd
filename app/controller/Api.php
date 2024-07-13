@@ -21,15 +21,13 @@ class Api
             $CreateTime = $obj->CreateTime;
             $MsgType = $obj->MsgType;
             $Content = $obj->Content;
-            Log::write('post后');
-            
-            return response(json_encode([
+            return json([
                 "ToUserName" => $FromUserName,
                 "FromUserName" => $ToUserName,
                 "CreateTime" => $CreateTime,
                 "MsgType" => $MsgType,
                 "Content" => "回复：" . $Content
-            ]));
+            ]);
         }
     }
 }
