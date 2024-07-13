@@ -30,8 +30,7 @@ class Api
             $CreateTime = $obj->CreateTime;
             $MsgType = $obj->MsgType;
             $Content = $obj->Content;
-            $Event=$obj->Event;
-            if ($MsgType=="event"&&$Event=="subscribe") {
+            if ($MsgType=="event") {
                 return json([
                     "ToUserName" => $FromUserName,
                     "FromUserName" => $ToUserName,
@@ -40,7 +39,7 @@ class Api
                     "Content" => "感谢您的关注本公众号是模拟器&游戏资源&游戏金手指分享公众号  游戏资源获取方式：1.点击下部菜单栏【搜索码】获取进入资源搜索码。2.切换菜单为文字输入模式，输入资源关键字。例如：“塞尔达荒野之息”，输入“塞尔达”或“荒野之息”即可自动给回复资源~"
                 ]);
             }
-
+            
             if ($MsgType == "text") {
                 //查询数据库业务逻辑
                 $result = Db::table('wp_posts')->where('post_title', 'like', '%' . $Content . '%')->limit(10)->select();
