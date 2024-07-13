@@ -55,17 +55,13 @@ class Api
                 }
                 $caolianjie = '';
                 foreach ($newResult as $key => $value) {
-                    if ($key == 1) {
-                        $title = $value["post_title"];
-                        $id = $value["ID"];
-                        $url = "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
-                        $caolianjie = $key . ":" . "<a href=" . $url . ">" . $title . "</a>" . "\n";
-                    } else {
+            
                         $title = $value["post_title"];
                         $id = $value["ID"];
                         $url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
+                        $key=$key+1;
                         $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
-                    }
+                   
                 }
                 return json_encode([
                     "ToUserName" => $FromUserName,
