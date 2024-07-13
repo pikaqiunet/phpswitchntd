@@ -22,6 +22,7 @@ class Api
             $MsgType = $obj->MsgType;
             $Content = $obj->Content;
             Log::write('post后');
+            
             return response(json_encode([
                 "ToUserName" => $FromUserName,
                 "FromUserName" => $ToUserName,
