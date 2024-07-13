@@ -44,19 +44,27 @@ class Api
                     $newResult[] = $value;
                 }
                 //print_r($newResult);
+                if (count($newResult)==0) {
+                    return json([
+                        "ToUserName" => $FromUserName,
+                        "FromUserName" => $ToUserName,
+                        "CreateTime" => $CreateTime,
+                        "MsgType" => "text",
+                        "Content" => "抱歉，暂无此资源，我们将很快更新，请稍后查询~"
+                    ]);
+                }
                 $caolianjie = '';
                 foreach ($newResult as $key => $value) {
                     if ($key == 1) {
                         $title = $value["post_title"];
                         $id = $value["ID"];
-                        $url = "'"."https://www.switchntd.com/" . $id . ".html"."'";
-
-                        $caolianjie = $key .":" ."<a href=".$url.">".$title."</a>". "\n";
+                        $url = "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
+                        $caolianjie = $key . ":" . "<a href=" . $url . ">" . $title . "</a>" . "\n";
                     } else {
                         $title = $value["post_title"];
                         $id = $value["ID"];
-                        $url =  "'"."https://www.switchntd.com/" . $id . ".html"."'";
-                        $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> ". "\n";
+                        $url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
+                        $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
                     }
                 }
                 return json_encode([
