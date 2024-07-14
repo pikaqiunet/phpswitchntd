@@ -39,7 +39,6 @@ class Api
                     //根据文章id，查询meta_key=cao_pwd;meta_key=cao_downurl
                     $url = Db::table('wp_postmeta')->where(["post_id" => $value["ID"], "meta_key" => "cao_downurl"])->find();
                     $code = Db::table('wp_postmeta')->where(["post_id" => $value["ID"], "meta_key" => "cao_pwd"])->find();
-
                     $value["cao_downurl"] = $url["meta_value"] ?? '';
                     $value["cao_pwd"] = $code["meta_value"] ?? '';
                     $newResult[] = $value;
