@@ -30,7 +30,7 @@ class Api
             $CreateTime = $obj->CreateTime;
             $MsgType = $obj->MsgType;
             $Content = $obj->Content;
-            
+
             if ($MsgType == "text") {
                 //查询数据库业务逻辑
                 $result = Db::table('wp_posts')->where('post_title', 'like', '%' . $Content . '%')->limit(10)->select();
@@ -42,7 +42,6 @@ class Api
                     $value["cao_downurl"] = $url["meta_value"] ?? '';
                     $value["cao_pwd"] = $code["meta_value"] ?? '';
                     $newResult[] = $value;
-                    
                 }
                 //print_r($newResult);
                 if (count($newResult) == 0) {
@@ -60,16 +59,19 @@ class Api
                         $title = $value["post_title"];
                         $id = $value["ID"];
                         //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
-                        $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id. "'";
+                        $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id . "'";
                         $key = $key + 1;
                         $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
                     }
                 }
+                $url =  "'" . "https://www.switchntd.com" . "'";
+                $caolianjie .= " 更多资源请访问 " . ":" . " <a href=" . $url . ">switchntd"."</a> " . "\n";
                 return json_encode([
                     "ToUserName" => $FromUserName,
                     "FromUserName" => $ToUserName,
                     "CreateTime" => $CreateTime,
                     "MsgType" => $MsgType,
+
                     "Content" => "“" . $Content . "”" . "的查询结果(只显示前10条结果，更多资源请在网站中搜索)：" . "\n" . $caolianjie
                 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
             } else {
