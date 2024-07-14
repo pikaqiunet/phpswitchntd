@@ -50,7 +50,7 @@ class Index
                 $downcode = Db::table('wp_postmeta')->where(["post_id" => $result["ID"], "meta_key" => "cao_pwd"])->find();
                 View::assign('downurl', $downurl["meta_value"]??'');
                 View::assign('downcode', $downcode["meta_value"]??'');
-                View::assign('post_title', $result["post_title"]);
+                View::assign('post_title', $result["post_title"]??'');
                 View::assign('id', $result["ID"]??'');
 
             }
