@@ -49,6 +49,7 @@ class Index
                 View::assign('downcode', $downcode["meta_value"]??'');
                 View::assign('post_title', $result["post_title"]);
                 View::assign('id', $result["ID"]);
+                
             }
         }
         return View::fetch();
