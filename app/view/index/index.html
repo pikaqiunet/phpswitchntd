@@ -60,19 +60,19 @@
   <div class="main">
     <div class="contanier">
       {if $flag }
-      <p>链接网盘：{if $downurl} <a href="{$downurl}" style="color: red;">{$post_title}</a></p>{else /}暂无网盘资源{/if} 
-      <p>网盘密码：{if $downcode}{$downcode}{else /}无密码{/if}</p>
+      <p style="text-align: center;">链接网盘：{if $downurl} <a href="{$downurl}" style="color: red;">{$post_title}</a></p>{else /}暂无网盘资源{/if} 
+      <p style="text-align: center;">网盘密码：{if $downcode}{$downcode}{else /}无密码{/if}</p>
       {else /}
       {if $id}
       <p>请先点击公众号菜单【搜索码】获取搜索码</p>
-      {else /}
-      <p>请点击公众号【查询结果】进入</p>
-      {/if}
       <form action="/" method="post">
         <input class="id" type="hidden" name="id" value="{$id}">
         <input class="code" type="text" name="code"  value="" placeholder="请输入最新搜索码，不区分大小写"><input class="button"
           type="submit" value="提交">
       </form>
+      {else /}
+      <p style="text-align: center;">请点击公众号【查询结果】链接进入</p>
+      {/if}
       {/if}
     </div>
   </div>

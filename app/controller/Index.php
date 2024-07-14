@@ -42,16 +42,20 @@ class Index
             $sqlcode = Db::table('wp_options')->where(["option_name" => "site-content"])->find();
             if (strtolower(trim($code)) == strtolower(trim($sqlcode["option_value"]))) {
                 View::assign('flag', true);
-                $result = Db::table('wp_posts')->where('ID', $id)->find();
+                $result=[];
+                if ($id) {
+                    $result = Db::table('wp_posts')->where('ID', $id)->find();
+                }
                 $downurl = Db::table('wp_postmeta')->where(["post_id" => $result["ID"], "meta_key" => "cao_downurl"])->find();
                 $downcode = Db::table('wp_postmeta')->where(["post_id" => $result["ID"], "meta_key" => "cao_pwd"])->find();
                 View::assign('downurl', $downurl["meta_value"]??'');
                 View::assign('downcode', $downcode["meta_value"]??'');
                 View::assign('post_title', $result["post_title"]);
-                View::assign('id', $result["ID"]);
-                
+                View::assign('id', $result["ID"]??'');
+
             }
         }
         return View::fetch();
+
     }
 }
