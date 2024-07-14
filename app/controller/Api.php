@@ -30,7 +30,6 @@ class Api
             $CreateTime = $obj->CreateTime;
             $MsgType = $obj->MsgType;
             $Content = $obj->Content;
-
             if ($MsgType == "text") {
                 //查询数据库业务逻辑
                 $result = Db::table('wp_posts')->where('post_title', 'like', '%' . $Content . '%')->limit(10)->select();
