@@ -48,13 +48,14 @@ class Api extends Base
                 }
                 $caolianjie = '';
                 foreach ($result as $key => $value) {
-
+                    if ($key<10) {
                         $title = $value->post_title;
                         $id = $value->id;
                         //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
                         $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id . "'";
                         $key = $key + 1;
                         $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
+                    }
 
                 }
                 $url =  "'" . "https://www.switchntd.com" . "'";
@@ -65,7 +66,7 @@ class Api extends Base
                     "CreateTime" => $CreateTime,
                     "MsgType" => $MsgType,
 
-                    "Content" => "“" . $Content . "”" . "的查询结果为".$server_result->count."条)：" . "\n" . $caolianjie
+                    "Content" => "“" . $Content . "”" . "的查询结果为".$server_result->count."条(只显示前10条结果)：" . "\n" . $caolianjie
                 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
             } else {
                 return json([
