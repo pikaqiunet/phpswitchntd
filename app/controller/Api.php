@@ -66,7 +66,7 @@ class Api extends Base
                     "CreateTime" => $CreateTime,
                     "MsgType" => $MsgType,
 
-                    "Content" => "“" . $Content . "”" . "的查询结果为".$server_result->count."条(只显示前10条结果)：" . "\n" . $caolianjie
+                    "Content" => "“" . $Content . "”" . "的查询结果为".$server_result->count."条(只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
                 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
             } else {
                 return json([
