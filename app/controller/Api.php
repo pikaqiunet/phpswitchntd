@@ -32,6 +32,10 @@ class Api extends Base
             $CreateTime = $obj->CreateTime;
             $MsgType = $obj->MsgType;
             $Content = $obj->Content;
+
+
+
+
             if ($MsgType == "text") {
                 //查询数据库业务逻辑
                 $server_result = $this->get("https://www.switchntd.com/wp-admin/api/queryByKey.php?k=" . $Content);
@@ -77,6 +81,10 @@ class Api extends Base
                     "Content" => "抱歉，暂不支持除文字以外的消息类型回复~"
                 ]);
             }
+
+
+
         }
+        echo "success";
     }
 }
