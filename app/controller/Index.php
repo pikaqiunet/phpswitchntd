@@ -58,4 +58,25 @@ class Index
         return View::fetch();
 
     }
+    public function index2(){
+        // $options = [
+        //     "ssl" => [
+        //         "verify_peer" => false,
+        //         "verify_peer_name" => false
+        //     ]
+        // ];
+        $url = "https://www.switchba.com/index.php/ajax/suggest?mid=1&limit=10&wd=天使";
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        //如果目标网站的SSL证书无法验证，可以添加以下选项
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $response = curl_exec($ch);
+        curl_close($ch);
+        $obj=json_decode($response);
+        print_r($obj->list);
+
+
+        //return json(file_get_contents("https://www.switchba.com/index.php/ajax/suggest?mid=1&limit=10&wd=天使",false,stream_context_create($options)));
+    }
 }

@@ -1,0 +1,39 @@
+{
+  "containers": [
+    {
+      "name": "phpswitchntd",
+      "domain": "",
+      "ip": "",
+      "containerId": "6c16d4af215add876c0f8c4458f466963dfeca4276f956b0c24181ed4a326d2e"
+    }
+  ],
+  "config": {
+    "phpswitchntd": {
+      "containerPort": 80,
+      "minNum": 0,
+      "maxNum": 5,
+      "cpu": 1,
+      "mem": 2,
+      "policyType": "cpu",
+      "policyThreshold": 60,
+      "policyDetails": [
+        {
+          "PolicyType": "cpu",
+          "PolicyThreshold": 60
+        },
+        {
+          "PolicyType": "mem",
+          "PolicyThreshold": 60
+        }
+      ],
+      "envParams": {},
+      "customLogs": "/app/runtime/log/*",
+      "dataBaseName": "thinkphp_demo",
+      "executeSQLs": [
+        "CREATE DATABASE IF NOT EXISTS thinkphp_demo;",
+        "USE thinkphp_demo;",
+        "CREATE TABLE IF NOT EXISTS `Counters` (`id` int(11) NOT NULL AUTO_INCREMENT, `count` int(11) NOT NULL DEFAULT 1, `createdAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, `updatedAt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP, PRIMARY KEY (`id`)) ENGINE = InnoDB DEFAULT CHARSET = utf8;"
+      ]
+    }
+  }
+}
