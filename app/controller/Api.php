@@ -34,8 +34,8 @@ class Api extends Base
             $Content = $obj->Content;
             if ($MsgType == "text") {
                 //查询数据库业务逻辑
-                $result = $this->get("https://www.switchntd.com/wp-admin/api/queryByKey.php?k=" . $Content)->data;
-
+                $server_result = $this->get("https://www.switchntd.com/wp-admin/api/queryByKey.php?k=" . $Content);
+                $result=$server_result->data;
                 //print_r($newResult);
                 if (count($result) == 0) {
                     return json([
@@ -48,14 +48,14 @@ class Api extends Base
                 }
                 $caolianjie = '';
                 foreach ($result as $key => $value) {
-                    if ($key < 10) {
+
                         $title = $value->post_title;
                         $id = $value->id;
                         //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
                         $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id . "'";
                         $key = $key + 1;
                         $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
-                    }
+
                 }
                 $url =  "'" . "https://www.switchntd.com" . "'";
                 $caolianjie .= " 更多资源请访问 " . ":" . " <a href=" . $url . ">switchntd" . "</a> " . "\n";
@@ -65,7 +65,7 @@ class Api extends Base
                     "CreateTime" => $CreateTime,
                     "MsgType" => $MsgType,
 
-                    "Content" => "“" . $Content . "”" . "的查询结果(只显示前10条结果，更多资源请在底部网站中搜索)：" . "\n" . $caolianjie
+                    "Content" => "“" . $Content . "”" . "的查询结果为".$server_result->count."条)：" . "\n" . $caolianjie
                 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
             } else {
                 return json([
