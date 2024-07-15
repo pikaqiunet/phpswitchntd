@@ -71,6 +71,9 @@
         <input class="code" type="text" name="code"  value="" placeholder="请输入最新搜索码，不区分大小写"><input class="button"
           type="submit" value="提交">
       </form>
+      {if $error }
+      <p style="color: red;">搜索码错误，请检查搜索码或重新获取~</p>
+      {/if}
       {else /}
       <p style="text-align: center;">请点击公众号【查询结果】链接进入</p>
       {/if}

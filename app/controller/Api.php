@@ -2,20 +2,22 @@
 
 namespace app\controller;
 
+use app\controller\Base;
 use think\facade\Db;
 use think\facade\Log;
 use think\Request;
 
-class Api
+class Api extends Base
 {
+
+
     //小程序密码获取接口
     public function code(Request $request)
     {
         if ($request->isPost()) {
-            $result = Db::table('wp_options')->where('option_name', "site-content")->find();
-            $code = $result["option_value"];
+            $server_code = $this->get("https://www.switchntd.com/wp-admin/api/code.php")->data;
             //从数据库调用密码
-            return json(["code" => $code]);
+            return json(["code" => $server_code]);
         }
     }
 
@@ -32,18 +34,10 @@ class Api
             $Content = $obj->Content;
             if ($MsgType == "text") {
                 //查询数据库业务逻辑
-                $result = Db::table('wp_posts')->where('post_title', 'like', '%' . $Content . '%')->limit(10)->select();
-                $newResult = [];
-                foreach ($result as $value) {
-                    //根据文章id，查询meta_key=cao_pwd;meta_key=cao_downurl
-                    $url = Db::table('wp_postmeta')->where(["post_id" => $value["ID"], "meta_key" => "cao_downurl"])->find();
-                    $code = Db::table('wp_postmeta')->where(["post_id" => $value["ID"], "meta_key" => "cao_pwd"])->find();
-                    $value["cao_downurl"] = $url["meta_value"] ?? '';
-                    $value["cao_pwd"] = $code["meta_value"] ?? '';
-                    $newResult[] = $value;
-                }
+                $result = $this->get("https://www.switchntd.com/wp-admin/api/queryByKey.php?k=" . $Content)->data;
+
                 //print_r($newResult);
-                if (count($newResult) == 0) {
+                if (count($result) == 0) {
                     return json([
                         "ToUserName" => $FromUserName,
                         "FromUserName" => $ToUserName,
@@ -53,10 +47,10 @@ class Api
                     ]);
                 }
                 $caolianjie = '';
-                foreach ($newResult as $key => $value) {
+                foreach ($result as $key => $value) {
                     if ($key < 10) {
-                        $title = $value["post_title"];
-                        $id = $value["ID"];
+                        $title = $value->post_title;
+                        $id = $value->id;
                         //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
                         $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id . "'";
                         $key = $key + 1;
@@ -64,7 +58,7 @@ class Api
                     }
                 }
                 $url =  "'" . "https://www.switchntd.com" . "'";
-                $caolianjie .= " 更多资源请访问 " . ":" . " <a href=" . $url . ">switchntd"."</a> " . "\n";
+                $caolianjie .= " 更多资源请访问 " . ":" . " <a href=" . $url . ">switchntd" . "</a> " . "\n";
                 return json_encode([
                     "ToUserName" => $FromUserName,
                     "FromUserName" => $ToUserName,
