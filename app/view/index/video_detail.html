@@ -63,7 +63,7 @@
             <p style="text-align: left;">电影名称：{if $title}{$title}{else /}暂无名称{/if}</p>
             <p style="text-align: left;">分集：{if $vod_play_url_arr}
                 {foreach $vod_play_url_arr as $key => $vo}
-                <a href="/index/video?url={$vo[1]}" style="color: rgb(6, 108, 34);">{$vo[0]}</a>
+                <br><a href="/index/video?url={$vo[1]}" style="color: rgb(6, 108, 34);">{$vo[0]}</a><br>
                 {/foreach}
                 {else /}暂无资源{/if}
             </p>
