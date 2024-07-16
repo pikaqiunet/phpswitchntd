@@ -3,7 +3,6 @@
 namespace app\controller;
 
 use app\controller\Base;
-use think\facade\Db;
 use think\Request;
 
 class Api extends Base
@@ -107,9 +106,6 @@ class Api extends Base
                     //查询数据库业务逻辑
                     $server_result = $this->get("https://www.switchba.com/api/v2/queryByKey.php?k=" . $Content[1] . "&t=" . $Content[0]);
                     $result = $server_result->data;
-
-                    print_r($result);
-
                     //print_r($newResult);
                     if (count($result) == 0) {
                         return json([
@@ -125,7 +121,6 @@ class Api extends Base
                         if ($key < 10) {
                             $title = $value->post_title;
                             $id = $value->id;
-                            $t = $Content[0];
                             $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/other?id=" . $id . "'";
                             $key = $key + 1;
                             $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
