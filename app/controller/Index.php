@@ -18,6 +18,37 @@ use app\controller\Base;
 class Index extends Base
 {
 
+    public function other(Request $request)
+    {   
+        View::assign('flag', false);
+        $id = $request->param("id") ?? "";
+        View::assign('id', $id);
+        View::assign('error', '');
+        if ($request->isPost()) {
+            $server_code = $this->get("https://www.switchntd.com/wp-admin/api/code.php")->data;
+            $code = $request->param("code") ?? "";
+            $id = $request->param("id") ?? "";
+            if (strtolower(trim($code)) == strtolower(trim($server_code))) {
+                if ($id) {
+
+
+
+                    $server_result = $this->get("https://www.switchba.com/api/v2/queryById.php?id=" . $id);
+                    View::assign('flag', true);
+                    View::assign('downurl', ($server_result->data->down_url) ?? '');
+                    View::assign('downcode', ($server_result->data->down_code) ?? '');
+                    View::assign('post_title', ($server_result->data->post_title) ?? '');
+                    View::assign('id', ($server_result->data->id) ?? '');
+                }
+            } else {
+                View::assign('error', "搜索码错误！");
+                return View::fetch();
+            }
+        }
+        return View::fetch('');
+
+
+    }
 
     public function index(Request $request)
     {
