@@ -4,13 +4,10 @@ namespace app\controller;
 
 use app\controller\Base;
 use think\facade\Db;
-use think\facade\Log;
 use think\Request;
 
 class Api extends Base
 {
-
-
     //小程序密码获取接口
     public function code(Request $request)
     {
@@ -20,7 +17,6 @@ class Api extends Base
             return json(["code" => $server_code]);
         }
     }
-
     //用户消息回复
     public function message(Request $request)
     {
@@ -107,14 +103,15 @@ class Api extends Base
 
                         "Content" => "“" . $Content[1] . "”" . "的查询结果为" . $server_result->count . "条(只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
                     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-
-                }else{
+                } elseif ($Content[0] == "壁纸" || $Content[0] == "软件" || $Content[0] == "小说" || strtolower($Content[0]) == "shota") {
+                    
+                } else {
                     return json([
                         "ToUserName" => $FromUserName,
                         "FromUserName" => $ToUserName,
                         "CreateTime" => $CreateTime,
                         "MsgType" => "text",
-                        "Content" => "抱歉，暂无此资源，我们将很快更新，请稍后查询~"
+                        "Content" => "指令错误，请重新输入，请查看公众号使用说明~"
                     ]);
                 }
             } else {
@@ -127,7 +124,6 @@ class Api extends Base
                 ]);
             }
         }
-
-        echo '';
+        return;
     }
 }

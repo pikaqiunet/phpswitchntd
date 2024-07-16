@@ -11,17 +11,8 @@
 
 namespace app\controller;
 
-use Error;
-use Exception;
-use app\model\Counters;
-use think\facade\Db;
-use think\response\Html;
-use think\response\Json;
-use think\facade\Log;
 use think\Request;
 use think\facade\View;
-use think\Request as ThinkRequest;
-use think\response\Redirect;
 use app\controller\Base;
 
 class Index extends Base

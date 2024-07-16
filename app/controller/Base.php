@@ -6,8 +6,6 @@ class Base
 {
     protected function get($url)
     {
-
-
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         //如果目标网站的SSL证书无法验证，可以添加以下选项
@@ -20,8 +18,6 @@ class Base
     }
     protected function get_file($url)
     {
-
-
         // 禁用 SSL 证书验证
         $context = stream_context_create(array(
             'http' => array(
