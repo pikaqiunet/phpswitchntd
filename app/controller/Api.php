@@ -102,7 +102,7 @@ class Api extends Base
 
                         "Content" => "“" . $Content[1] . "”" . "的查询结果为" . $server_result->count . "条(只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
                     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-                } elseif ($Content[0] == null) {
+                } elseif ($Content[0]) {
                     //查询数据库业务逻辑
                     $server_result = $this->get("https://www.switchba.com/api/v2/queryByKey.php?k=" . $Content[1] . "&t=" . $Content[0]);
                     $result = $server_result->data;
@@ -134,14 +134,6 @@ class Api extends Base
 
                         "Content" => "“" . $Content[1] . "”" . "的查询结果为" . $server_result->count . "条(只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
                     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-                } else {
-                    return json([
-                        "ToUserName" => $FromUserName,
-                        "FromUserName" => $ToUserName,
-                        "CreateTime" => $CreateTime,
-                        "MsgType" => "text",
-                        "Content" => "指令错误，请重新输入，请查看公众号使用说明~"
-                    ]);
                 }
             } else {
                 return json([
