@@ -102,7 +102,7 @@ class Api extends Base
 
                         "Content" => "“" . $Content[1] . "”" . "的查询结果为" . $server_result->count . "条(只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
                     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-                } elseif ($Content[0] == "壁纸" || $Content[0] == "软件" || $Content[0] == "小说" || strtolower($Content[0]) == "shota") {
+                } elseif ($Content[0] == null) {
                     //查询数据库业务逻辑
                     $server_result = $this->get("https://www.switchba.com/api/v2/queryByKey.php?k=" . $Content[1] . "&t=" . $Content[0]);
                     $result = $server_result->data;
