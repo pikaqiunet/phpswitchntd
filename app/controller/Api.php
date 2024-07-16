@@ -108,6 +108,14 @@ class Api extends Base
                         "Content" => "“" . $Content[1] . "”" . "的查询结果为" . $server_result->count . "条(只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
                     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
+                }else{
+                    return json([
+                        "ToUserName" => $FromUserName,
+                        "FromUserName" => $ToUserName,
+                        "CreateTime" => $CreateTime,
+                        "MsgType" => "text",
+                        "Content" => "抱歉，暂无此资源，我们将很快更新，请稍后查询~"
+                    ]);
                 }
             } else {
                 return json([
