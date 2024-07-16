@@ -23,6 +23,7 @@ use think\facade\View;
 use think\Request as ThinkRequest;
 use think\response\Redirect;
 use app\controller\Base;
+
 class Index extends Base
 {
 
@@ -54,5 +55,10 @@ class Index extends Base
             }
         }
         return View::fetch();
+    }
+    public function video(Request $request)
+    {
+        $url = $request->param("url") ?? "";
+        echo $this->get_video($url);
     }
 }
