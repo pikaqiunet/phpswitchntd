@@ -32,13 +32,77 @@ class Api extends Base
             if ($MsgType == "text") {
                 //判断指令是否有误
                 if (!(($Content[0] ?? '') && ($Content[1] ?? ''))) {
-                    return json([
+                    //查询数据库业务逻辑
+                    $server_result = $this->get("https://www.switchntd.com/wp-admin/api/queryByKey.php?k=" . $Content);
+                    $result = $server_result->data;
+                    //print_r($newResult);
+                    if (count($result) == 0) {
+                        return json([
+                            "ToUserName" => $FromUserName,
+                            "FromUserName" => $ToUserName,
+                            "CreateTime" => $CreateTime,
+                            "MsgType" => "text",
+                            "Content" => "抱歉，暂无此资源，我们将很快更新，请稍后查询~"
+                        ]);
+                    }
+                    $caolianjie = '';
+                    foreach ($result as $key => $value) {
+                        if ($key < 10) {
+                            $title = $value->post_title;
+                            $id = $value->id;
+                            //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
+                            $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id . "'";
+                            $key = $key + 1;
+                            $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
+                        }
+                    }
+                    $url =  "'" . "https://www.switchntd.com" . "'";
+                    $caolianjie .= " 更多资源请访问 " . ":" . " <a href=" . $url . ">switchntd.com" . "</a> " . "\n";
+                    return json_encode([
                         "ToUserName" => $FromUserName,
                         "FromUserName" => $ToUserName,
                         "CreateTime" => $CreateTime,
-                        "MsgType" => "text",
-                        "Content" => "抱歉，查询指令有误，请按照【使用说明】进行查询~"
-                    ]);
+                        "MsgType" => $MsgType,
+
+                        "Content" => "“" . $Content . "”" . "的查询结果为" . $server_result->count . "条(只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
+                    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+                } elseif ($Content[0] == "电影") {
+
+                    //查询数据库业务逻辑
+                    $server_result = $this->get("https://www.switchba.com/api/queryByKey.php?k=" . $Content);
+                    $result = $server_result->data;
+                    //print_r($newResult);
+                    if (count($result) == 0) {
+                        return json([
+                            "ToUserName" => $FromUserName,
+                            "FromUserName" => $ToUserName,
+                            "CreateTime" => $CreateTime,
+                            "MsgType" => "text",
+                            "Content" => "抱歉，暂无此资源，我们将很快更新，请稍后查询~"
+                        ]);
+                    }
+                    $caolianjie = '';
+
+                    foreach ($result as $key => $value) {
+                        if ($key < 10) {
+                            $title = $value->post_title;
+                            $id = $value->id;
+                            //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
+                            $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/video_detail?id=" . $id . "'";
+                            $key = $key + 1;
+                            $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
+                        }
+                    }
+                    $url =  "'" . "https://www.switchba.com" . "'";
+                    $caolianjie .= " 更多资源请访问 " . ":" . " <a href=" . $url . ">switchba.com" . "</a> " . "\n";
+                    return json_encode([
+                        "ToUserName" => $FromUserName,
+                        "FromUserName" => $ToUserName,
+                        "CreateTime" => $CreateTime,
+                        "MsgType" => $MsgType,
+
+                        "Content" => "“" . $Content[1] . "”" . "的查询结果为" . $server_result->count . "条(只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
+                    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
                 }
 
 

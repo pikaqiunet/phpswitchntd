@@ -30,9 +30,6 @@ class Index extends Base
             $id = $request->param("id") ?? "";
             if (strtolower(trim($code)) == strtolower(trim($server_code))) {
                 if ($id) {
-
-
-
                     $server_result = $this->get("https://www.switchba.com/api/v2/queryById.php?id=" . $id);
                     View::assign('flag', true);
                     View::assign('downurl', ($server_result->data->down_url) ?? '');
