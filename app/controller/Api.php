@@ -33,9 +33,8 @@ class Api extends Base
                 //判断指令是否有误
                 if (!(($Content[0] ?? '') && ($Content[1] ?? ''))) {
                     //查询数据库业务逻辑
-                    $server_result = $this->get("https://www.switchntd.com/wp-admin/api/queryByKey.php?k=" . $Content);
+                    $server_result = $this->get("https://www.switchntd.com/wp-admin/api/queryByKey.php?k=" . $Content[0]);
                     $result = $server_result->data;
-                    //print_r($newResult);
                     if (count($result) == 0) {
                         return json([
                             "ToUserName" => $FromUserName,
@@ -63,8 +62,7 @@ class Api extends Base
                         "FromUserName" => $ToUserName,
                         "CreateTime" => $CreateTime,
                         "MsgType" => $MsgType,
-
-                        "Content" => "“" . $Content . "”" . "的查询结果为" . $server_result->count . "条(只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
+                        "Content" => "“" .  $Content[0] . "”" . "的查询结果为" . $server_result->count . "条(只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
                     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
                 } elseif ($Content[0] == "电影") {
 
@@ -82,7 +80,6 @@ class Api extends Base
                         ]);
                     }
                     $caolianjie = '';
-
                     foreach ($result as $key => $value) {
                         if ($key < 10) {
                             $title = $value->post_title;
