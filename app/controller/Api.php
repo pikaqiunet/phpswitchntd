@@ -27,7 +27,6 @@ class Api extends Base
             $CreateTime = $obj->CreateTime;
             $MsgType = $obj->MsgType;
             $Content = $obj->Content;
-
             $Content = explode("#", $Content);
             if ($MsgType == "text") {
                 //判断指令是否有误
@@ -45,25 +44,33 @@ class Api extends Base
                         ]);
                     }
                     $caolianjie = '';
-                    foreach ($result as $key => $value) {
-                        if ($key < 10) {
-                            $title = $value->post_title;
-                            $id = $value->id;
-                            //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
-                            $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id . "'";
-                            $key = $key + 1;
-                            $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
+
+
+
+                    $chunks = array_chunk($result, 10);
+
+
+                    foreach ($chunks as $key => $group) {
+                        foreach ($group as $key => $value) {
+                            if ($key < 10) {
+                                $title = $value->post_title;
+                                $id = $value->id;
+                                //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
+                                $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id . "'";
+                                $key = $key + 1;
+                                $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
+                            }
                         }
+                        $url =  "'" . "https://www.switchntd.com" . "'";
+                        $caolianjie .= " 更多资源请访问 " . ":" . " <a href=" . $url . ">switchntd.com" . "</a> " . "\n";
+                        echo json_encode([
+                            "ToUserName" => $FromUserName,
+                            "FromUserName" => $ToUserName,
+                            "CreateTime" => $CreateTime,
+                            "MsgType" => $MsgType,
+                            "Content" => "“" .  $Content[0] . "”" . "的查询结果为" . $server_result->count . "条(10条结果为一组显示,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
+                        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
                     }
-                    $url =  "'" . "https://www.switchntd.com" . "'";
-                    $caolianjie .= " 更多资源请访问 " . ":" . " <a href=" . $url . ">switchntd.com" . "</a> " . "\n";
-                    return json_encode([
-                        "ToUserName" => $FromUserName,
-                        "FromUserName" => $ToUserName,
-                        "CreateTime" => $CreateTime,
-                        "MsgType" => $MsgType,
-                        "Content" => "“" .  $Content[0] . "”" . "的查询结果为" . $server_result->count . "条(只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
-                    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
                 } elseif ($Content[0] == "电影") {
 
                     //查询数据库业务逻辑
