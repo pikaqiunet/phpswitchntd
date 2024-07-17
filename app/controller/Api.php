@@ -30,6 +30,18 @@ class Api extends Base
 
             $Content = explode("#", $Content);
             if ($MsgType == "text") {
+                //判断指令是否有误
+                if (!(($Content[0] ?? '') && ($Content[1] ?? ''))) {
+                    return json([
+                        "ToUserName" => $FromUserName,
+                        "FromUserName" => $ToUserName,
+                        "CreateTime" => $CreateTime,
+                        "MsgType" => "text",
+                        "Content" => "抱歉，查询指令有误，请按照【使用说明】进行查询~"
+                    ]);
+                }
+
+
                 if ($Content[0] == "游戏") {
                     //查询数据库业务逻辑
                     $server_result = $this->get("https://www.switchntd.com/wp-admin/api/queryByKey.php?k=" . $Content[1]);
@@ -102,7 +114,9 @@ class Api extends Base
 
                         "Content" => "“" . $Content[1] . "”" . "的查询结果为" . $server_result->count . "条(只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
                     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-                } elseif ($Content[0]) {
+                } else {
+
+
                     //查询数据库业务逻辑
                     $server_result = $this->get("https://www.switchba.com/api/v2/queryByKey.php?k=" . $Content[1] . "&t=" . $Content[0]);
                     $result = $server_result->data;
