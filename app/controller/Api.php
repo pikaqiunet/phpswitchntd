@@ -127,6 +127,8 @@ class Api extends Base
                             $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
                         }
                     }
+                    $url =  "'" . "https://video.switchba.com" . "'";
+                    $caolianjie .= " 更多资源请访问 " . ":" . " <a href=" . $url . ">video.switchba.com" . "</a> " . "\n";
                     return json_encode([
                         "ToUserName" => $FromUserName,
                         "FromUserName" => $ToUserName,
