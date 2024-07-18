@@ -22,7 +22,7 @@ class Api extends Base
         if ($request->isPost()) {
             $data = $request->getInput();
             $obj = json_decode($data);
-            $ToUserName = $obj->ToUserName??'';
+            $ToUserName = $obj->ToUserName ?? '';
             if (!$ToUserName) {
                 echo "success";
                 exit;
