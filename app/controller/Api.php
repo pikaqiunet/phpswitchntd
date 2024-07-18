@@ -59,7 +59,7 @@ class Api extends Base
                         }
                     }
                     $url =  "'" . "https://www.switchntd.com/?s=" . $Content[0] . "'";
-                    $caolianjie .= " 更多资源请访问 " . ":" . " <a href=" . $url . ">switchntd.com" . "</a> " . "\n";
+                    $caolianjie .= " 更多资源 " . ":" . " <a href=" . $url . ">点击查看" . "</a> " . "\n";
                     return json_encode([
                         "ToUserName" => $FromUserName,
                         "FromUserName" => $ToUserName,
@@ -95,7 +95,7 @@ class Api extends Base
                         }
                     }
                     $url =  "'" . "https://www.switchntd.com/?s=" . $Content[1] . "'";
-                    $caolianjie .= " 更多资源请访问 " . ":" . " <a href=" . $url . ">switchntd.com" . "</a> " . "\n";
+                    $caolianjie .= " 更多资源 " . ":" . " <a href=" . $url . ">点击查看" . "</a> " . "\n";
                     return json_encode([
                         "ToUserName" => $FromUserName,
                         "FromUserName" => $ToUserName,
@@ -132,7 +132,7 @@ class Api extends Base
                         }
                     }
                     $url =  "'" . "https://video.switchba.com/vodsearch/-------------.html?wd=".$Content[1]. "'";
-                    $caolianjie .= " 更多资源请访问 " . ":" . " <a href=" . $url . ">video.switchba.com" . "</a> " . "\n";
+                    $caolianjie .= " 更多资源" . ":" . " <a href=" . $url . ">点击查看" . "</a> " . "\n";
                     return json_encode([
                         "ToUserName" => $FromUserName,
                         "FromUserName" => $ToUserName,
@@ -171,7 +171,7 @@ class Api extends Base
                         "CreateTime" => $CreateTime,
                         "MsgType" => $MsgType,
 
-                        "Content" => "“" . $Content[1] . "”" . "的查询结果为" . $server_result->count . "条(由于长度限制,只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
+                        "Content" => "“" . $Content[1] . "”" . "的查询结果为" . $server_result->count . "条(由于长度限制,只显示前10条结果)：" . "\n" . $caolianjie
                     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
                 }
             } else {
