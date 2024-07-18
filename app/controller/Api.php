@@ -22,11 +22,11 @@ class Api extends Base
         if ($request->isPost()) {
             $data = $request->getInput();
             $obj = json_decode($data);
-            $action = $obj->action ?? '';
-            if ($action) {
+            $ToUserName = $obj->ToUserName??'';
+            if (!$ToUserName) {
                 echo "success";
+                exit;
             }
-            $ToUserName = $obj->ToUserName;
             $FromUserName = $obj->FromUserName;
             $CreateTime = $obj->CreateTime;
             $MsgType = $obj->MsgType;
