@@ -58,7 +58,7 @@ class Api extends Base
                             $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
                         }
                     }
-                    $url =  "'" . "https://www.switchntd.com" . "'";
+                    $url =  "'" . "https://www.switchntd.com/?s=" . $Content[0] . "'";
                     $caolianjie .= " 更多资源请访问 " . ":" . " <a href=" . $url . ">switchntd.com" . "</a> " . "\n";
                     return json_encode([
                         "ToUserName" => $FromUserName,
@@ -94,7 +94,7 @@ class Api extends Base
                             $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
                         }
                     }
-                    $url =  "'" . "https://www.switchntd.com" . "'";
+                    $url =  "'" . "https://www.switchntd.com/?s=" . $Content[1] . "'";
                     $caolianjie .= " 更多资源请访问 " . ":" . " <a href=" . $url . ">switchntd.com" . "</a> " . "\n";
                     return json_encode([
                         "ToUserName" => $FromUserName,
