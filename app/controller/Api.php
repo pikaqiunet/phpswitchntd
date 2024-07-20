@@ -30,6 +30,19 @@ class Api extends Base
             $FromUserName = $obj->FromUserName;
             $CreateTime = $obj->CreateTime;
             $MsgType = $obj->MsgType;
+
+            if ($MsgType == "event") {
+                return json([
+                    "ToUserName" => $FromUserName,
+                    "FromUserName" => $ToUserName,
+                    "CreateTime" => $CreateTime,
+                    "MsgType" => "text",
+                    "Content" => "感谢您的关注，请点击使用说明查看使用方式~"
+                ]);
+                exit;
+            }
+
+
             if ($MsgType != "text") {
                 return json([
                     "ToUserName" => $FromUserName,
@@ -40,6 +53,7 @@ class Api extends Base
                 ]);
                 exit;
             }
+
             $Content = $obj->Content;
             $Content = explode("#", $Content);
 
