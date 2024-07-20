@@ -41,8 +41,6 @@ class Api extends Base
                 ]);
                 exit;
             }
-
-
             if ($MsgType != "text") {
                 return json([
                     "ToUserName" => $FromUserName,
