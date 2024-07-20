@@ -30,8 +30,19 @@ class Api extends Base
             $FromUserName = $obj->FromUserName;
             $CreateTime = $obj->CreateTime;
             $MsgType = $obj->MsgType;
+            if ($MsgType != "text") {
+                return json([
+                    "ToUserName" => $FromUserName,
+                    "FromUserName" => $ToUserName,
+                    "CreateTime" => $CreateTime,
+                    "MsgType" => "text",
+                    "Content" => "信息已收到,文字以外的消息稍后由人工回复，请及时关注公众号聊天消息~"
+                ]);
+                exit;
+            }
             $Content = $obj->Content;
             $Content = explode("#", $Content);
+
             if ($MsgType == "text") {
                 //判断指令是否有误
                 if (!(($Content[0] ?? '') && ($Content[1] ?? ''))) {
@@ -131,7 +142,7 @@ class Api extends Base
                             $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
                         }
                     }
-                    $url =  "'" . "https://video.switchba.com/vodsearch/-------------.html?wd=".$Content[1]. "'";
+                    $url =  "'" . "https://video.switchba.com/vodsearch/-------------.html?wd=" . $Content[1] . "'";
                     $caolianjie .= " 更多资源" . ":" . " <a href=" . $url . ">点击查看" . "</a> " . "\n";
                     return json_encode([
                         "ToUserName" => $FromUserName,
@@ -174,14 +185,6 @@ class Api extends Base
                         "Content" => "“" . $Content[1] . "”" . "的查询结果为" . $server_result->count . "条(由于长度限制,只显示前10条结果)：" . "\n" . $caolianjie
                     ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
                 }
-            } else {
-                return json([
-                    "ToUserName" => $FromUserName,
-                    "FromUserName" => $ToUserName,
-                    "CreateTime" => $CreateTime,
-                    "MsgType" => "text",
-                    "Content" => "抱歉，暂不支持除文字以外的消息类型回复~"
-                ]);
             }
         }
     }
