@@ -13,6 +13,7 @@ namespace app\controller;
 
 use think\Request;
 use think\facade\View;
+
 use app\controller\Base;
 
 class Index extends Base

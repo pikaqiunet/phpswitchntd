@@ -4,7 +4,7 @@ namespace app\controller;
 
 use app\controller\Base;
 use think\Request;
-
+use think\facade\Log;
 class Api extends Base
 {
     //小程序密码获取接口
@@ -21,6 +21,7 @@ class Api extends Base
     {
         if ($request->isPost()) {
             $data = $request->getInput();
+            Log::save($data);
             $obj = json_decode($data);
             $ToUserName = $obj->ToUserName ?? '';
             if (!$ToUserName) {
@@ -37,7 +38,7 @@ class Api extends Base
                     "FromUserName" => $ToUserName,
                     "CreateTime" => $CreateTime,
                     "MsgType" => "text",
-                    "Content" => "感谢您的关注，请点击使用说明查看使用方式~"
+                    "Content" => "感谢您的关注，请点击左下角“使用说明”查看使用方式~"
                 ]);
                 exit;
             }
@@ -82,7 +83,7 @@ class Api extends Base
                         }
                     }
                     $url =  "'" . "https://www.switchntd.com/?s=" . $Content[0] . "'";
-                    $caolianjie .= " 更多资源 " . ":" . " <a href=" . $url . ">点击查看" . "</a> " . "\n";
+                    $caolianjie .= " 更多资源 " . ":" . " <a href=" . $url . ">".$url . "</a> " . "\n";
                     return json_encode([
                         "ToUserName" => $FromUserName,
                         "FromUserName" => $ToUserName,
@@ -114,7 +115,7 @@ class Api extends Base
                             //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
                             $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id . "'";
                             $key = $key + 1;
-                            $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
+                            $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $url . "</a> " . "\n";
                         }
                     }
                     $url =  "'" . "https://www.switchntd.com/?s=" . $Content[1] . "'";
@@ -151,7 +152,7 @@ class Api extends Base
                             //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
                             $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/video_detail?id=" . $id . "'";
                             $key = $key + 1;
-                            $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
+                            $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $url . "</a> " . "\n";
                         }
                     }
                     $url =  "'" . "https://video.switchba.com/vodsearch/-------------.html?wd=" . $Content[1] . "'";
@@ -185,7 +186,7 @@ class Api extends Base
                             $id = $value->id;
                             $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/other?id=" . $id . "'";
                             $key = $key + 1;
-                            $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
+                            $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $url . "</a> " . "\n";
                         }
                     }
                     return json_encode([
