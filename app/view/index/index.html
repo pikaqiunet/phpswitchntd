@@ -62,7 +62,7 @@
       {if $flag }
       <p style="text-align: left;">网盘链接(点击标题打开)：{if $downurl} <a href="{$downurl}" style="color: red;">{$post_title}</a></p>{else /}暂无网盘资源{/if} 
       <p style="text-align: left;">网盘密码(长按密码复制)：{if $downcode}{$downcode}{else /}无密码{/if}</p>
-      <p style="text-align: left;">资源详情：{if $id} <a href="https://www.switchntd.com/{$id}.html" style="color: rgb(6, 108, 34);">https://www.switchntd.com/{$id}.html</a>{else /}暂无详情{/if} </p>
+      <p style="text-align: left;">资源详情(复制到手机或电脑浏览器打开)：{if $id} <a href="https://www.switchntd.com/{$id}.html" style="color: rgb(6, 108, 34);">https://www.switchntd.com/{$id}.html</a>{else /}暂无详情{/if} </p>
       {else /}
       {if $id}
       <p>请先点击公众号菜单【搜索码】获取搜索码</p>

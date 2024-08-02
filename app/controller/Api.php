@@ -83,7 +83,7 @@ class Api extends Base
                         }
                     }
                     $url = "https://www.switchntd.com/?s=" . $Content[0];
-                    $caolianjie .= " 更多资源请用浏览器访问switchntd.com";
+                    $caolianjie .= " 更多资源推荐浏览器访问switchntd.com";
                     return json_encode([
                         "ToUserName" => $FromUserName,
                         "FromUserName" => $ToUserName,
@@ -119,7 +119,7 @@ class Api extends Base
                         }
                     }
                     $url = "https://www.switchntd.com/?s=" . $Content[1];
-                    $caolianjie .= "更多资源请用浏览器访问switchntd.com";
+                    $caolianjie .= "更多资源推荐浏览器访问switchntd.com";
                     return json_encode([
                         "ToUserName" => $FromUserName,
                         "FromUserName" => $ToUserName,
@@ -156,7 +156,7 @@ class Api extends Base
                         }
                     }
                     $url ="'" . "https://video.switchba.com/vodsearch/-------------.html?wd=" . $Content[1] . "'";
-                    $caolianjie .= " 更多资源" . ":" . " <a href=" . $url . ">点击搜索". "</a> " . "\n";
+                    $caolianjie .= " 更多资源" . ":" . " <a href=" . $url . ">点击查看". "</a> " . "\n";
                     return json_encode([
                         "ToUserName" => $FromUserName,
                         "FromUserName" => $ToUserName,
