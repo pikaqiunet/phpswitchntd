@@ -83,7 +83,7 @@ class Api extends Base
                         }
                     }
                     $url = "https://www.switchntd.com/?s=" . $Content[0];
-                    $caolianjie .= " 更多资源 " . ":" . " <a href=" . $url . ">".$url . "</a> " . "\n";
+                    $caolianjie .= " 更多资源请用浏览器访问switchntd.com";
                     return json_encode([
                         "ToUserName" => $FromUserName,
                         "FromUserName" => $ToUserName,
@@ -115,11 +115,11 @@ class Api extends Base
                             //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
                             $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id . "'";
                             $key = $key + 1;
-                            $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $url . "</a> " . "\n";
+                            $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
                         }
                     }
                     $url = "https://www.switchntd.com/?s=" . $Content[1];
-                    $caolianjie .= " 更多资源 " . ":" . " <a href=" . $url . ">" .$url. "</a> " . "\n";
+                    $caolianjie .= "更多资源请用浏览器访问switchntd.com";
                     return json_encode([
                         "ToUserName" => $FromUserName,
                         "FromUserName" => $ToUserName,
@@ -156,7 +156,7 @@ class Api extends Base
                         }
                     }
                     $url ="https://video.switchba.com/vodsearch/-------------.html?wd=" . $Content[1];
-                    $caolianjie .= " 更多资源" . ":" . " <a href=" . $url . ">" . $url. "</a> " . "\n";
+                    $caolianjie .= " 更多资源" . ":" . " <a href=" . $url . ">点击搜索". "</a> " . "\n";
                     return json_encode([
                         "ToUserName" => $FromUserName,
                         "FromUserName" => $ToUserName,
