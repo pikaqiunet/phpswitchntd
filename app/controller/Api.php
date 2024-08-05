@@ -110,7 +110,7 @@ class Api extends Base
                 $server_result = $this->get("https://www.switchba.com/api/v2/queryByKey.php?k=" . $Content);
                 $result2 = $server_result->data;
                 foreach ($result2 as $key => $value) {
-                    if ($key < 10 - count($result2)) {
+                    if ($key < 10 - count($result1)) {
                         $title = $value->post_title;
                         $id = $value->id;
                         $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/other?id=" . $id . "'";
