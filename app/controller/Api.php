@@ -125,7 +125,7 @@ class Api extends Base
 
                 if ($result3 = $server_result->data) {
                     # code...
-                    foreach ($result2 as $key => $value) {
+                    foreach ($result3 as $key => $value) {
                         if ($key < 10 - count($result1 + $result2)) {
                             $title = $value->post_title;
                             $id = $value->id;
