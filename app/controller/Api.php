@@ -18,41 +18,20 @@ class Api extends Base
         }
     }
 
-    private function curl_request($url, $post = array(), $cookie = '', $returnCookie = 0)
-    {
+    private function https_request($url, $data = null){
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; Trident/6.0)');
-        curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
-        curl_setopt($curl, CURLOPT_AUTOREFERER, 1);
-        curl_setopt($curl, CURLOPT_REFERER, "http://XXX");
-        if ($post) {
-            curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($post));
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+        if (!empty($data)){
+         curl_setopt($curl, CURLOPT_POST, 1);
+         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
         }
-        if ($cookie) {
-            curl_setopt($curl, CURLOPT_COOKIE, $cookie);
-        }
-        curl_setopt($curl, CURLOPT_HEADER, $returnCookie);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 10);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 1);  //ssl 这两行代码是为了能走https的请求,http请求放着也没有影响
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE); //ssl 这两行代码是为了能走https的请求,http请求放着也没有影响
-        $data = curl_exec($curl);
-        if (curl_errno($curl)) {
-            return curl_error($curl);
-        }
+        $output = curl_exec($curl);
         curl_close($curl);
-        if ($returnCookie) {
-            list($header, $body) = explode("\r\n\r\n", $data, 2);
-            preg_match_all("/Set\-Cookie:([^;]*);/", $header, $matches);
-            $info['cookie']  = substr($matches[1][0], 1);
-            $info['content'] = $body;
-            return $info;
-        } else {
-            return $data;
-        }
-    }
+        return $output;
+       }
 
 
 
@@ -76,14 +55,30 @@ class Api extends Base
 
 
             if ($MsgType == "event") {
+
+                $url = 'http://api.weixin.qq.com/cgi-bin/message/custom/send';
+                $content = '感谢你的关注\n回复你厉害 \n例如<a href=\"http://www.baidu.com\">回复123456</a>';
+                $data = '{
+                 "touser":"'.$FromUserName.'",
+                 "msgtype":"text",
+                 "text":
+                 {
+                   "content":"'.$content.'"
+                 }
+                }';
+                $this->https_request($url,$data);
+                sleep(0.5);
+                $this->https_request($url,$data);
+                sleep(0.5);
+                $this->https_request($url,$data);
                 //被动
-                return json([
-                    "ToUserName" => $FromUserName,
-                    "FromUserName" => $ToUserName,
-                    "CreateTime" => $CreateTime,
-                    "MsgType" => "text",
-                    "Content" => "感谢您的关注，请点击左下角“使用说明”查看使用方式~"
-                ]);
+                // return json([
+                //     "ToUserName" => $FromUserName,
+                //     "FromUserName" => $ToUserName,
+                //     "CreateTime" => $CreateTime,
+                //     "MsgType" => "text",
+                //     "Content" => "感谢您的关注，请点击左下角“使用说明”查看使用方式~"
+                // ]);
                 exit;
             }
             if ($MsgType != "text") {
