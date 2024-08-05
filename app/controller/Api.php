@@ -5,6 +5,7 @@ namespace app\controller;
 use app\controller\Base;
 use think\Request;
 use think\facade\Log;
+
 class Api extends Base
 {
     //小程序密码获取接口
@@ -21,16 +22,18 @@ class Api extends Base
     {
         if ($request->isPost()) {
             $data = $request->getInput();
-            Log::save($data);
             $obj = json_decode($data);
+
             $ToUserName = $obj->ToUserName ?? '';
             if (!$ToUserName) {
                 echo "success";
                 exit;
             }
+
             $FromUserName = $obj->FromUserName;
             $CreateTime = $obj->CreateTime;
             $MsgType = $obj->MsgType;
+            $Content = $obj->Content;
 
             if ($MsgType == "event") {
                 return json([
@@ -53,151 +56,65 @@ class Api extends Base
                 exit;
             }
 
-            $Content = $obj->Content;
-            $Content = explode("#", $Content);
+
+
 
             if ($MsgType == "text") {
-                //判断指令是否有误
-                if (!(($Content[0] ?? '') && ($Content[1] ?? ''))) {
-                    //查询数据库业务逻辑
-                    $server_result = $this->get("https://www.switchntd.com/wp-admin/api/queryByKey.php?k=" . $Content[0]);
-                    $result = $server_result->data;
-                    if (count($result) == 0) {
-                        return json([
-                            "ToUserName" => $FromUserName,
-                            "FromUserName" => $ToUserName,
-                            "CreateTime" => $CreateTime,
-                            "MsgType" => "text",
-                            "Content" => "抱歉，暂无此资源，我们将很快更新，请稍后查询~"
-                        ]);
+
+                $caolianjie = '';
+                //资源搜索
+                //查询数据库业务逻辑
+                $server_result = $this->get("https://www.switchba.com/api/v2/queryByKey.php?k=" . $Content);
+                $result = $server_result->data;
+                foreach ($result as $key => $value) {
+                    if ($key < 10) {
+                        $title = $value->post_title;
+                        $id = $value->id;
+                        $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/other?id=" . $id . "'";
+                        $key = $key + 1;
+                        $caolianjie .= "资源:" . " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
                     }
-                    $caolianjie = '';
-                    foreach ($result as $key => $value) {
-                        if ($key < 10) {
-                            $title = $value->post_title;
-                            $id = $value->id;
-                            //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
-                            $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id . "'";
-                            $key = $key + 1;
-                            $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
-                        }
-                    }
-                    $url = "https://www.switchntd.com/?s=" . $Content[0];
-                    $caolianjie .= " 更多资源推荐浏览器访问switchntd.com";
-                    return json_encode([
-                        "ToUserName" => $FromUserName,
-                        "FromUserName" => $ToUserName,
-                        "CreateTime" => $CreateTime,
-                        "MsgType" => $MsgType,
-                        "Content" => "“" .  $Content[0] . "”" . "的查询结果为" . $server_result->count . "条(由于长度限制,只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
-                    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
                 }
+                //电影搜索
+                //查询数据库业务逻辑
+                $server_result = $this->get("https://www.switchba.com/api/queryByKey.php?k=" . $Content);
+                $result = $server_result->data;
 
-                if ($Content[0] == "游戏") {
-                    //查询数据库业务逻辑
-                    $server_result = $this->get("https://www.switchntd.com/wp-admin/api/queryByKey.php?k=" . $Content[1]);
-                    $result = $server_result->data;
-                    //print_r($newResult);
-                    if (count($result) == 0) {
-                        return json([
-                            "ToUserName" => $FromUserName,
-                            "FromUserName" => $ToUserName,
-                            "CreateTime" => $CreateTime,
-                            "MsgType" => "text",
-                            "Content" => "抱歉，暂无此资源，我们将很快更新，请稍后查询~"
-                        ]);
+                foreach ($result as $key => $value) {
+                    if ($key < 10) {
+                        $title = $value->post_title;
+                        $id = $value->id;
+                        //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
+                        $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/video_detail?id=" . $id . "'";
+                        $key = $key + 1;
+                        $caolianjie .= "电影:" . " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
                     }
-                    $caolianjie = '';
-                    foreach ($result as $key => $value) {
-                        if ($key < 10) {
-                            $title = $value->post_title;
-                            $id = $value->id;
-                            //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
-                            $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id . "'";
-                            $key = $key + 1;
-                            $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
-                        }
-                    }
-                    $url = "https://www.switchntd.com/?s=" . $Content[1];
-                    $caolianjie .= "更多资源推荐浏览器访问switchntd.com";
-                    return json_encode([
-                        "ToUserName" => $FromUserName,
-                        "FromUserName" => $ToUserName,
-                        "CreateTime" => $CreateTime,
-                        "MsgType" => $MsgType,
-
-                        "Content" => "“" . $Content[1] . "”" . "的查询结果为" . $server_result->count . "条(由于长度限制,只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
-                    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-                } elseif ($Content[0] == "电影") {
-
-                    //查询数据库业务逻辑
-                    $server_result = $this->get("https://www.switchba.com/api/queryByKey.php?k=" . $Content[1]);
-                    $result = $server_result->data;
-                    //print_r($newResult);
-                    if (count($result) == 0) {
-                        return json([
-                            "ToUserName" => $FromUserName,
-                            "FromUserName" => $ToUserName,
-                            "CreateTime" => $CreateTime,
-                            "MsgType" => "text",
-                            "Content" => "抱歉，暂无此资源，我们将很快更新，请稍后查询~"
-                        ]);
-                    }
-                    $caolianjie = '';
-
-                    foreach ($result as $key => $value) {
-                        if ($key < 10) {
-                            $title = $value->post_title;
-                            $id = $value->id;
-                            //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
-                            $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/video_detail?id=" . $id . "'";
-                            $key = $key + 1;
-                            $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
-                        }
-                    }
-                    $url ="'" . "https://video.switchba.com/vodsearch/-------------.html?wd=" . $Content[1] . "'";
-                    $caolianjie .= " 更多资源" . ":" . " <a href=" . $url . ">点击查看". "</a> " . "\n";
-                    return json_encode([
-                        "ToUserName" => $FromUserName,
-                        "FromUserName" => $ToUserName,
-                        "CreateTime" => $CreateTime,
-                        "MsgType" => $MsgType,
-
-                        "Content" => "“" . $Content[1] . "”" . "的查询结果为" . $server_result->count . "条(由于长度限制,只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
-                    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
-                } else {
-                    //查询数据库业务逻辑
-                    $server_result = $this->get("https://www.switchba.com/api/v2/queryByKey.php?k=" . $Content[1] . "&t=" . $Content[0]);
-                    $result = $server_result->data;
-                    //print_r($newResult);
-                    if (count($result) == 0) {
-                        return json([
-                            "ToUserName" => $FromUserName,
-                            "FromUserName" => $ToUserName,
-                            "CreateTime" => $CreateTime,
-                            "MsgType" => "text",
-                            "Content" => "抱歉，暂无此资源，我们将很快更新，请稍后查询~"
-                        ]);
-                    }
-                    $caolianjie = '';
-                    foreach ($result as $key => $value) {
-                        if ($key < 10) {
-                            $title = $value->post_title;
-                            $id = $value->id;
-                            $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/other?id=" . $id . "'";
-                            $key = $key + 1;
-                            $caolianjie .= " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
-                        }
-                    }
-                    return json_encode([
-                        "ToUserName" => $FromUserName,
-                        "FromUserName" => $ToUserName,
-                        "CreateTime" => $CreateTime,
-                        "MsgType" => $MsgType,
-
-                        "Content" => "“" . $Content[1] . "”" . "的查询结果为" . $server_result->count . "条(由于长度限制,只显示前10条结果)：" . "\n" . $caolianjie
-                    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
                 }
+                $url = "'" . "https://video.switchba.com/vodsearch/-------------.html?wd=" . $Content . "'";
+                $caolianjie .= " 更多资源" . ":" . " <a href=" . $url . ">点击查看" . "</a> " . "\n";
+
+                //游戏搜索
+                //查询数据库业务逻辑
+                $server_result = $this->get("https://www.switchntd.com/wp-admin/api/queryByKey.php?k=" . $Content);
+                $result = $server_result->data;
+                foreach ($result as $key => $value) {
+                    if ($key < 10) {
+                        $title = $value->post_title;
+                        $id = $value->id;
+                        //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
+                        $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id . "'";
+                        $key = $key + 1;
+                        $caolianjie .= "游戏:" . " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
+                    }
+                }
+                $caolianjie .= " 更多游戏资源推荐浏览器访问:switchntd.com";
+                return json_encode([
+                    "ToUserName" => $FromUserName,
+                    "FromUserName" => $ToUserName,
+                    "CreateTime" => $CreateTime,
+                    "MsgType" => $MsgType,
+                    "Content" => "“" .  $Content . "”" . "的查询结果为" . $server_result->count . "条(由于长度限制,只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
+                ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
             }
         }
     }

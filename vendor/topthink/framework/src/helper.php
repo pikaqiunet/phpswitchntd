@@ -305,7 +305,7 @@ if (!function_exists('json')) {
      * @param array $options 参数
      * @return \think\response\Json
      */
-    function json($data = [], $code = 200, $header = [], $options = []): Json
+function json($data = [], $code = 200, $header = [], $options = []): Json
     {
         return Response::create($data, 'json', $code)->header($header)->options($options);
     }
