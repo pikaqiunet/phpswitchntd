@@ -56,29 +56,15 @@ class Api extends Base
 
             if ($MsgType == "event") {
 
-                $url = 'http://api.weixin.qq.com/cgi-bin/message/custom/send';
-                $content = '感谢你的关注\n回复你厉害 \n例如<a href=\"http://www.baidu.com\">回复123456</a>';
-                $data = '{
-                 "touser":"'.$FromUserName.'",
-                 "msgtype":"text",
-                 "text":
-                 {
-                   "content":"'.$content.'"
-                 }
-                }';
-                $this->https_request($url,$data);
-                sleep(0.5);
-                $this->https_request($url,$data);
-                sleep(0.5);
-                $this->https_request($url,$data);
+
                 //被动
-                // return json([
-                //     "ToUserName" => $FromUserName,
-                //     "FromUserName" => $ToUserName,
-                //     "CreateTime" => $CreateTime,
-                //     "MsgType" => "text",
-                //     "Content" => "感谢您的关注，请点击左下角“使用说明”查看使用方式~"
-                // ]);
+                return json([
+                    "ToUserName" => $FromUserName,
+                    "FromUserName" => $ToUserName,
+                    "CreateTime" => $CreateTime,
+                    "MsgType" => "text",
+                    "Content" => "感谢您的关注，请点击左下角“使用说明”查看使用方式~"
+                ]);
                 exit;
             }
             if ($MsgType != "text") {
@@ -150,13 +136,31 @@ class Api extends Base
                     $caolianjie .= "更多游戏资源推荐浏览器访问:switchntd.com";
                 }
 
-                return json_encode([
-                    "ToUserName" => $FromUserName,
-                    "FromUserName" => $ToUserName,
-                    "CreateTime" => $CreateTime,
-                    "MsgType" => $MsgType,
-                    "Content" => "“" .  $Content . "”" . "的查询结果为" . (count($result1) + count($result2) + count($result3))  . "条(由于长度限制,只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
-                ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+                $url = 'http://api.weixin.qq.com/cgi-bin/message/custom/send';
+                $content = '感谢你的关注\n回复你厉害 \n例如<a href=\"http://www.baidu.com\">回复123456</a>';
+                $data = '{
+                 "touser":"'.$FromUserName.'",
+                 "msgtype":"text",
+                 "text":
+                 {
+                   "content":"'.$content.'"
+                 }
+                }';
+                $this->https_request($url,$data);
+                sleep(0.5);
+                $this->https_request($url,$data);
+                sleep(0.5);
+                $this->https_request($url,$data);
+
+
+                // return json_encode([
+                //     "ToUserName" => $FromUserName,
+                //     "FromUserName" => $ToUserName,
+                //     "CreateTime" => $CreateTime,
+                //     "MsgType" => $MsgType,
+                //     "Content" => "“" .  $Content . "”" . "的查询结果为" . (count($result1) + count($result2) + count($result3))  . "条(由于长度限制,只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
+                // ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
             }
         }
     }
