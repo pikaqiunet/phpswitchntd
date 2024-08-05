@@ -133,7 +133,7 @@ class Api extends Base
                         }
                     }
                     $url = "'" . "https://video.switchba.com/vodsearch/-------------.html?wd=" . $Content . "'";
-                    $caolianjie .= " 更多电影" . ":" . " <a href=" . $url . ">点击查看" . "</a> " . "\n";
+                    $caolianjie .= "更多电影" . ":" . " <a href=" . $url . ">点击查看" . "</a> " . "\n";
                 }
 
                 //游戏搜索
@@ -152,7 +152,7 @@ class Api extends Base
                             $caolianjie .= " $key " . "游戏:" . " <a href=" . $url . ">" . $title . "</a>" . "\n";
                         }
                     }
-                    $caolianjie .= " 更多游戏资源推荐浏览器访问:switchntd.com";
+                    $caolianjie .= "更多游戏资源推荐浏览器访问:switchntd.com";
                 }
 
                 return json_encode([
@@ -160,7 +160,7 @@ class Api extends Base
                     "FromUserName" => $ToUserName,
                     "CreateTime" => $CreateTime,
                     "MsgType" => $MsgType,
-                    "Content" => "“" .  $Content . "”" . "的查询结果为" . $server_result->count . "条(由于长度限制,只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
+                    "Content" => "“" .  $Content . "”" . "的查询结果为" . count(array_merge($result1,$result2,$result3)) . "条(由于长度限制,只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
                 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
             }
         }
