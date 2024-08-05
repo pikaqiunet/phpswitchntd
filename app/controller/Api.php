@@ -137,7 +137,7 @@ class Api extends Base
                 }
 
 
-                $url = 'http://api.weixin.qq.com/cgi-bin/message/custom/send';
+                $url = 'http://api.weixin.qq.com/cgi-bin/message/custom/send?'.'from_appid='.'';
                 $content = '感谢你的关注\n回复你厉害 \n例如<a href=\"http://www.baidu.com\">回复123456</a>';
                 $data = '{
                  "touser":"'.$FromUserName.'",
@@ -148,10 +148,7 @@ class Api extends Base
                  }
                 }';
                 $this->https_request($url,$data);
-                sleep(0.5);
-                $this->https_request($url,$data);
-                sleep(0.5);
-                $this->https_request($url,$data);
+
 
 
                 // return json_encode([
