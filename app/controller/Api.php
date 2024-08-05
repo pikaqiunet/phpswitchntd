@@ -65,8 +65,8 @@ class Api extends Base
                 //资源搜索
                 //查询数据库业务逻辑
                 $server_result = $this->get("https://www.switchba.com/api/v2/queryByKey.php?k=" . $Content);
-                $result = $server_result->data;
-                foreach ($result as $key => $value) {
+                $result1 = $server_result->data;
+                foreach ($result1 as $key => $value) {
                     if ($key < 10) {
                         $title = $value->post_title;
                         $id = $value->id;
@@ -78,32 +78,34 @@ class Api extends Base
                 //电影搜索
                 //查询数据库业务逻辑
                 $server_result = $this->get("https://www.switchba.com/api/queryByKey.php?k=" . $Content);
-                $result = $server_result->data;
 
-                foreach ($result as $key => $value) {
-                    if ($key < 10) {
-                        $title = $value->post_title;
-                        $id = $value->id;
-                        //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
-                        $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/video_detail?id=" . $id . "'";
-                        $key = $key + 1;
-                        $caolianjie .= "电影:" . " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
+                if ($result2 = $server_result->data) {
+                    # code...
+                    foreach ($result2 as $key => $value) {
+                        if ($key < 10 - count($result1)) {
+                            $title = $value->post_title;
+                            $id = $value->id;
+                            //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
+                            $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/video_detail?id=" . $id . "'";
+                            $key = $key + 1+count($result1);
+                            $caolianjie .= "电影:" . " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
+                        }
                     }
+                    $url = "'" . "https://video.switchba.com/vodsearch/-------------.html?wd=" . $Content . "'";
+                    $caolianjie .= " 更多电影" . ":" . " <a href=" . $url . ">点击查看" . "</a> " . "\n";
                 }
-                $url = "'" . "https://video.switchba.com/vodsearch/-------------.html?wd=" . $Content . "'";
-                $caolianjie .= " 更多资源" . ":" . " <a href=" . $url . ">点击查看" . "</a> " . "\n";
 
                 //游戏搜索
                 //查询数据库业务逻辑
                 $server_result = $this->get("https://www.switchntd.com/wp-admin/api/queryByKey.php?k=" . $Content);
-                $result = $server_result->data;
-                foreach ($result as $key => $value) {
-                    if ($key < 10) {
+                $result3 = $server_result->data;
+                foreach ($result3 as $key => $value) {
+                    if ($key < 10 - count($result1 + $result2)) {
                         $title = $value->post_title;
                         $id = $value->id;
                         //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
                         $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id . "'";
-                        $key = $key + 1;
+                        $key = $key + 1+count($result1 + $result2);
                         $caolianjie .= "游戏:" . " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
                     }
                 }
