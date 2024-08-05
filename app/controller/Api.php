@@ -77,30 +77,24 @@ class Api extends Base
 
             if ($MsgType == "event") {
                 //主动
-                //$data= $this->curl_request("http://api.weixin.qq.com/cgi-bin/message/custom/send",["touser"=> $FromUserName,"msgtype"=>"text","text"=>["content"=>"文本消息"]]);
-                //    return json([
+                $data = $this->curl_request("http://api.weixin.qq.com/cgi-bin/message/custom/send", ["touser" => $FromUserName, "msgtype" => "text", "text" => ["content" => "文本消息"]]);
+                // return json([
                 //     "ToUserName" => $FromUserName,
                 //     "FromUserName" => $ToUserName,
                 //     "CreateTime" => $CreateTime,
                 //     "MsgType" => "text",
-                //     "Content" => $data;
+                //     "Content" => $data
                 // ]);
-
+                exit;
 
                 //被动
-                return json([[
+                return json([
                     "ToUserName" => $FromUserName,
                     "FromUserName" => $ToUserName,
                     "CreateTime" => $CreateTime,
                     "MsgType" => "text",
                     "Content" => "感谢您的关注，请点击左下角“使用说明”查看使用方式~"
-                ], [
-                    "ToUserName" => $FromUserName,
-                    "FromUserName" => $ToUserName,
-                    "CreateTime" => $CreateTime,
-                    "MsgType" => "text",
-                    "Content" => "感谢您的关注，请点击左下角“使用说明”查看使用方式~"
-                ]]);
+                ]);
                 exit;
             }
             if ($MsgType != "text") {
