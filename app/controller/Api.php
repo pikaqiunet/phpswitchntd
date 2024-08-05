@@ -33,7 +33,7 @@ class Api extends Base
             $FromUserName = $obj->FromUserName;
             $CreateTime = $obj->CreateTime;
             $MsgType = $obj->MsgType;
-            $Content = $obj->Content;
+            
 
             if ($MsgType == "event") {
                 return json([
@@ -56,7 +56,7 @@ class Api extends Base
                 exit;
             }
 
-
+            $Content = $obj->Content;
 
 
             if ($MsgType == "text") {
