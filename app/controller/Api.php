@@ -113,7 +113,7 @@ class Api extends Base
                         $id = $value->id;
                         $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/other?id=" . $id . "'";
                         $key = $key + 1;
-                        $caolianjie .=" $key " . "资源:" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
+                        $caolianjie .= " $key " . "资源:" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
                     }
                 }
                 //电影搜索
@@ -160,7 +160,7 @@ class Api extends Base
                     "FromUserName" => $ToUserName,
                     "CreateTime" => $CreateTime,
                     "MsgType" => $MsgType,
-                    "Content" => "“" .  $Content . "”" . "的查询结果为" . count(array_merge($result1,$result2,$result3)) . "条(由于长度限制,只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
+                    "Content" => "“" .  $Content . "”" . "的查询结果为" . (count($result1) + count($result2) + count($result3))  . "条(由于长度限制,只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
                 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
             }
         }
