@@ -114,7 +114,7 @@ class Api extends Base
                         $title = $value->post_title;
                         $id = $value->id;
                         $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/other?id=" . $id . "'";
-                        $key = $key + 1 + count($result2);
+                        $key = $key + 1 + count($result1);
                         $caolianjie .= " $key " . "资源:" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
                     }
                 }
