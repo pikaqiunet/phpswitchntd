@@ -87,7 +87,7 @@ class Api extends Base
                             $id = $value->id;
                             //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
                             $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/video_detail?id=" . $id . "'";
-                            $key = $key + 1+count($result1);
+                            $key = $key + 1 + count($result1);
                             $caolianjie .= "电影:" . " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
                         }
                     }
@@ -99,17 +99,21 @@ class Api extends Base
                 //查询数据库业务逻辑
                 $server_result = $this->get("https://www.switchntd.com/wp-admin/api/queryByKey.php?k=" . $Content);
                 $result3 = $server_result->data;
-                foreach ($result3 as $key => $value) {
-                    if ($key < 10 - count($result1 + $result2)) {
-                        $title = $value->post_title;
-                        $id = $value->id;
-                        //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
-                        $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id . "'";
-                        $key = $key + 1+count($result1 + $result2);
-                        $caolianjie .= "游戏:" . " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
+                if ($result3) {
+                    # code...
+                    foreach ($result3 as $key => $value) {
+                        if ($key < 10 - count($result1 + $result2)) {
+                            $title = $value->post_title;
+                            $id = $value->id;
+                            //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
+                            $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id . "'";
+                            $key = $key + 1 + count($result1 + $result2);
+                            $caolianjie .= "游戏:" . " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
+                        }
                     }
+                    $caolianjie .= " 更多游戏资源推荐浏览器访问:switchntd.com";
                 }
-                $caolianjie .= " 更多游戏资源推荐浏览器访问:switchntd.com";
+
                 return json_encode([
                     "ToUserName" => $FromUserName,
                     "FromUserName" => $ToUserName,
