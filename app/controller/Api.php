@@ -89,10 +89,10 @@ class Api extends Base
                 //游戏搜索
                 //查询数据库业务逻辑
                 $server_result = $this->get("https://www.switchntd.com/wp-admin/api/queryByKey.php?k=" . $Content);
-                $result3 = $server_result->data;
-                if ($result3) {
+                $result1 = $server_result->data;
+                if ($result1) {
                     # code...
-                    foreach ($result3 as $key => $value) {
+                    foreach ($result1 as $key => $value) {
                         if ($key < 10) {
                             $title = $value->post_title;
                             $id = $value->id;
@@ -108,11 +108,11 @@ class Api extends Base
                 //资源搜索
                 //查询数据库业务逻辑
                 $server_result = $this->get("https://www.switchba.com/api/v2/queryByKey.php?k=" . $Content);
-                $result1 = $server_result->data;
-                foreach ($result1 as $key => $value) {
-                    if ($key < 10 - count($result3)) {
+                $result2 = $server_result->data;
+                foreach ($result2 as $key => $value) {
+                    if ($key < 10 - count($result2)) {
                         $title = $value->post_title;
-                        $id = $value->id + $result3;
+                        $id = $value->id + count($result2);
                         $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/other?id=" . $id . "'";
                         $key = $key + 1;
                         $caolianjie .= " $key " . "资源:" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
@@ -123,15 +123,15 @@ class Api extends Base
                 //查询数据库业务逻辑
                 $server_result = $this->get("https://www.switchba.com/api/queryByKey.php?k=" . $Content);
 
-                if ($result2 = $server_result->data) {
+                if ($result3 = $server_result->data) {
                     # code...
                     foreach ($result2 as $key => $value) {
-                        if ($key < 10 - count($result3 + $result2)) {
+                        if ($key < 10 - count($result1 + $result2)) {
                             $title = $value->post_title;
                             $id = $value->id;
                             //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
                             $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/video_detail?id=" . $id . "'";
-                            $key = $key + 1 + count($result2 + $result3);
+                            $key = $key + 1 + count($result1 + $result2);
                             $caolianjie .= " $key " . "电影:" . " <a href=" . $url . ">" . $title . "</a>" . "\n";
                         }
                     }
@@ -144,7 +144,7 @@ class Api extends Base
                     "FromUserName" => $ToUserName,
                     "CreateTime" => $CreateTime,
                     "MsgType" => $MsgType,
-                    "Content" => "“" .  $Content . "”" . "的查询结果为" . (count($result1) + count($result2) + count($result3))  . "条(由于长度限制,只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
+                    "Content" => "“" .  $Content . "”" . "的查询结果为" . (count($result1 + $result2 + $result3))  . "条(由于长度限制,只显示前10条结果,更多结果请在底部网站中搜索)：" . "\n" . $caolianjie
                 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
             }
         }
