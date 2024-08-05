@@ -113,7 +113,7 @@ class Api extends Base
                         $id = $value->id;
                         $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/other?id=" . $id . "'";
                         $key = $key + 1;
-                        $caolianjie .= "资源:" . " $key " . ":" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
+                        $caolianjie .=" $key " . "资源:" . " <a href=" . $url . ">" . $title . "</a> " . "\n";
                     }
                 }
                 //电影搜索
@@ -129,7 +129,7 @@ class Api extends Base
                             //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
                             $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com/index/video_detail?id=" . $id . "'";
                             $key = $key + 1 + count($result1);
-                            $caolianjie .= "电影:" . " $key " . ":" . " <a href=" . $url . ">" . $title . "</a>" . "\n";
+                            $caolianjie .= " $key " . "电影:" . " <a href=" . $url . ">" . $title . "</a>" . "\n";
                         }
                     }
                     $url = "'" . "https://video.switchba.com/vodsearch/-------------.html?wd=" . $Content . "'";
@@ -149,7 +149,7 @@ class Api extends Base
                             //$url =  "'" . "https://www.switchntd.com/" . $id . ".html" . "'";
                             $url =  "'" . "https://thinkphp-nginx-bdq6-114871-5-1327940628.sh.run.tcloudbase.com?id=" . $id . "'";
                             $key = $key + 1 + count($result1 + $result2);
-                            $caolianjie .= "游戏:" . " $key " . ":" . " <a href=" . $url . ">" . $title . "</a>" . "\n";
+                            $caolianjie .= " $key " . "游戏:" . " <a href=" . $url . ">" . $title . "</a>" . "\n";
                         }
                     }
                     $caolianjie .= " 更多游戏资源推荐浏览器访问:switchntd.com";
