@@ -4,7 +4,7 @@ namespace app\controller;
 
 class Base
 {
-   
+
     protected function get($url)
     {
         $ch = curl_init($url);

@@ -19,8 +19,47 @@ use app\controller\Base;
 class Index extends Base
 {
 
+    //统一查询入口
+    public function search(Request $request)
+    {
+
+        if ($request->isPost()) {
+            $code = $request->param("code") ?? "";
+            $Content = $request->param("keywords") ?? "";
+
+            $server_code = $this->get("https://www.switchntd.com/wp-admin/api/code.php")->data;
+            if (strtolower(trim($code)) == strtolower(trim($server_code))) {
+                //游戏搜索
+                //查询数据库业务逻辑
+                $server_result = $this->get("https://www.switchntd.com/wp-admin/api/queryByKey.php?k=" . $Content);
+                $result1 = $server_result->data;
+                //资源搜索
+                //查询数据库业务逻辑
+                $server_result = $this->get("https://www.switchba.com/api/v2/queryByKey.php?k=" . $Content);
+                $result2 = $server_result->data;
+                //电影搜索
+                //查询数据库业务逻辑
+                $server_result = $this->get("https://www.switchba.com/api/queryByKey.php?k=" . $Content);
+                $result3 = $server_result->data;
+                View::assign("code", $server_code);
+                View::assign("result1", $result1);
+                View::assign("result2",  $result2);
+                View::assign("result3",  $result3);
+                return View::fetch('search_result');
+            } else {
+                View::assign("verify", false);
+                return View::fetch();
+            }
+        }
+        View::assign("verify", true);
+        View::assign("keywords",$request->param("keywords") ?? "");
+        return View::fetch();
+    }
+
+
+
     public function other(Request $request)
-    {   
+    {
         View::assign('flag', false);
         $id = $request->param("id") ?? "";
         View::assign('id', $id);
@@ -44,8 +83,6 @@ class Index extends Base
             }
         }
         return View::fetch('');
-
-
     }
 
     public function index(Request $request)
