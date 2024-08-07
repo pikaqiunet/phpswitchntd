@@ -6,78 +6,45 @@
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>安全验证</title>
-  <style>
-    body {
-      background-color: rgb(214, 227, 223);
-    }
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
 
-    /* 父容器需要设置为flex布局 */
-    .main {
-      display: flex;
-      justify-content: center;
-      /* 水平居中 */
-      align-items: center;
-      /* 垂直居中 */
-      height: 100vh;
-      /* 父容器的高度设置为视窗高度 */
-      margin: 0;
-      padding: 0;
-    }
-
-    .contanier {
-      width: 94%;
-      /* 或者具体的宽度值 */
-      margin: 0 auto;
-      padding: 0 0 0 6%;
-    }
-
-    .contanier a {
-      text-decoration: none;
-      color: rgb(27, 27, 27);
-    }
-
-    .code {
-      height: 30px;
-      width: 70%;
-      border: none;
-      border-radius: none;
-    }
-
-    .button {
-      height: 32px;
-      width: 20%;
-      margin: 0;
-      padding: 0;
-      background-color: rgb(4, 151, 70);
-      border: none;
-      color: white;
-      border-radius: none;
-    }
-  </style>
 </head>
 
 <body>
-  <div class="main">
-    <div class="contanier">
-      {if $flag }
-      <p style="text-align: left;">网盘链接(点击标题打开)：{if $downurl} <a href="{$downurl}" style="color: red;">{$post_title}</a></p>{else /}暂无网盘资源{/if} 
-      <p style="text-align: left;">网盘密码(长按密码复制)：{if $downcode}{$downcode}{else /}无密码{/if}</p>
-      <p style="text-align: left;">资源详情(复制到手机或电脑浏览器打开)：{if $id} <a href="https://www.switchntd.com/{$id}.html" style="color: rgb(6, 108, 34);">https://www.switchntd.com/{$id}.html</a>{else /}暂无详情{/if} </p>
-      {else /}
-      {if $id}
-      <p>请先点击公众号菜单【搜索码】获取搜索码</p>
-      <form action="/" method="post">
-        <input class="id" type="hidden" name="id" value="{$id}">
-        <input class="code" type="text" name="code"  value="" placeholder="请输入最新搜索码，不区分大小写"><input class="button"
-          type="submit" value="提交">
-      </form>
-      {if $error }
-      <p style="color: red;">搜索码错误，请检查搜索码或重新获取~</p>
-      {/if}
-      {else /}
-      <p style="text-align: center;">请点击公众号【查询结果】链接进入</p>
-      {/if}
-      {/if}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 mt-5">
+        {if $flag }
+        <div class="alert alert-primary" role="alert">
+          <p style="text-align: left;">网盘链接(点击标题打开)：{if $downurl} <a href="{$downurl}"
+              style="color: red;text-decoration: none;">{$post_title}</a>
+          </p>{else /}暂无网盘资源{/if}
+          <p style="text-align: left;">网盘密码(长按密码复制)：{if $downcode}{$downcode}{else /}无密码{/if}</p>
+          <p style="text-align: left;">资源详情(复制到手机或电脑浏览器打开)：{if $id} <a href="https://www.switchntd.com/{$id}.html"
+              style="color: rgb(6, 108, 34); text-decoration: none;">https://www.switchntd.com/{$id}.html</a>{else
+            /}暂无详情{/if} </p>
+        </div>
+
+        {else /}
+        {if $id}
+        <p>请先点击公众号菜单【搜索码】获取搜索码</p>
+        <form action="/" method="post">
+          <input class="id" type="hidden" name="id" value="{$id}">
+          <input class="code" type="text" name="code" value="" placeholder="请输入最新搜索码，不区分大小写"><input class="button"
+            type="submit" value="提交">
+        </form>
+        {if $error }
+        <p style="color: red;">搜索码错误，请检查搜索码或重新获取~</p>
+        {/if}
+        {else /}
+        <p style="text-align: center;">请点击公众号【查询结果】链接进入</p>
+        {/if}
+        {/if}
+      </div>
     </div>
   </div>
 </body>
