@@ -26,7 +26,7 @@ class Index extends Base
         if ($request->isPost()) {
             $code = $request->param("code") ?? "";
             $Content = $request->param("keywords") ?? "";
-
+            View::assign("keywords",$request->param("keywords") ?? "");
             $server_code = $this->get("https://www.switchntd.com/wp-admin/api/code.php")->data;
             if (strtolower(trim($code)) == strtolower(trim($server_code))) {
                 //游戏搜索
@@ -47,6 +47,7 @@ class Index extends Base
                 View::assign("result3",  $result3);
                 return View::fetch('search_result');
             } else {
+                View::assign("keywords",$request->param("keywords") ?? "");
                 View::assign("verify", false);
                 return View::fetch();
             }
