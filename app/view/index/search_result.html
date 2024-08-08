@@ -10,6 +10,12 @@
     <script src="/static/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
+    <script src="/static/bootstrap.bundle.min.js"
+        integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+        crossorigin="anonymous"></script>
+    <script src="/static/jquery-3.7.1.min.js"></script>
+    <script src="/static/layer.js"></script>
+
 
 </head>
 
@@ -157,7 +163,7 @@
                                         <form action="/index/video_detail" method="post">
                                             <input type="hidden" name="id" value="{$vo->id}">
                                             <input type="hidden" name="code" value="{$code}">
-                                            <button type="submit" class="btn btn-dark">查看</button>
+                                            <button type="submit" id="button" class="btn btn-dark">查看</button>
                                         </form>
 
                                     </td>
@@ -170,13 +176,6 @@
 
                     </div>
 
-
-
-
-
-
-
-
                 </div>
 
 
@@ -184,7 +183,13 @@
         </div>
     </div>
 
+    <script>
 
+        const btn = document.getElementById("button")
+        btn.addEventListener("click", (e) => {
+            index = layer.load(1);
+        })
+    </script>
 </body>
 
 </html>
