@@ -92,10 +92,6 @@
 
 
                     </div>
-
-
-
-
                     <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                         <div class="alert alert-danger mt-3" role="alert">
                             软件、音源、图集等查询结果:
@@ -133,10 +129,6 @@
                         {/if}
 
                     </div>
-
-
-
-
                     <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
 
                         <div class="alert alert-info mt-3" role="alert">
@@ -185,10 +177,17 @@
 
     <script>
 
-        const btn = document.getElementById("button")
-        btn.addEventListener("click", (e) => {
+        const btn = document.querySelectorAll("button")
+        for (let index = 0; index < btn.length; index++) {
+            const element = btn[index];
+            element.addEventListener("click", () => {
             index = layer.load(1);
+            setTimeout(()=>{return true},2000)
         })
+        }
+        setTimeout(()=>{
+            layer.close(index)
+        },2000)
     </script>
 </body>
 
