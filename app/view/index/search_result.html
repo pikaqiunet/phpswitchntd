@@ -32,9 +32,9 @@
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
 
-                        <div class="nav-link active" style="margin-right: 5px;" id="nav-home-tab"
-                            data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab"
-                            aria-controls="nav-home" aria-selected="true">游戏</div>
+                        <div class="nav-link active" style="margin-right: 5px;" id="nav-home-tab" data-bs-toggle="tab"
+                            data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                            aria-selected="true">游戏</div>
 
 
 
@@ -181,13 +181,13 @@
         for (let index = 0; index < btn.length; index++) {
             const element = btn[index];
             element.addEventListener("click", () => {
-            index = layer.load(1);
-            setTimeout(()=>{return true},2000)
-        })
+                index = layer.load(1);
+                setTimeout(() => {
+                    layer.close(index)
+                    e.returnValue()
+                }, 2000)
+            })
         }
-        setTimeout(()=>{
-            layer.close(index)
-        },2000)
     </script>
 </body>
 
