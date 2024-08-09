@@ -38,7 +38,6 @@ class Index extends Base
                     "k" => $Content
                 ]));
                 $result1 = $server_result->data;
-
                 //资源搜索
                 //查询数据库业务逻辑
                 $server_result = $this->get("https://www.switchba.com/api/v2/queryByKey.php?" .  http_build_query([
