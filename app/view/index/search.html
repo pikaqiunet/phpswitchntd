@@ -58,6 +58,7 @@
     <script>
         const btn = document.querySelector("button")
         btn.addEventListener("click", (e) => {
+            btn.disabled;
             index = layer.load(1);
             setTimeout(() => {
                 layer.close(index)
