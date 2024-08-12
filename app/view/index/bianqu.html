@@ -7,10 +7,10 @@
     content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>安全验证</title>
   <link href="/static/bootstrap.min.css" rel="stylesheet"
-  integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-<script src="/static/bootstrap.bundle.min.js"
-  integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
-  crossorigin="anonymous"></script>
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <script src="/static/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+    crossorigin="anonymous"></script>
 
 
 </head>
@@ -22,20 +22,18 @@
         {if $flag }
         <div class="alert alert-primary" role="alert">
           <p style="text-align: left;">网盘链接(点击标题打开)：{if $downurl} <a href="{$downurl}"
-              style="color: red; text-decoration: none;">{$post_title}</a>
+              style="color: red;text-decoration: none;">{$post_title}</a>
           </p>{else /}暂无网盘资源{/if}
-          
           <p style="text-align: left;">网盘密码(长按密码复制)：{if $downcode}{$downcode}{else /}无密码{/if}</p>
-        
-          {if $adhere }
-              {$adhere|raw}
-          {/if}
-          
+          <div style="text-align: left;">来源：{if $id} <a style="color: rgb(6, 108, 34); text-decoration: none;">https://www.bianqula.com/{$id}.html</a>{else
+            /}暂无详情{/if} </div>
         </div>
+
+
         {else /}
         {if $id}
         <p>请先点击公众号菜单【搜索码】获取搜索码</p>
-        <form action="/index/other" method="post">
+        <form action="/" method="post">
           <input class="id" type="hidden" name="id" value="{$id}">
           <input class="code" type="text" name="code" value="" placeholder="请输入最新搜索码，不区分大小写"><input class="button"
             type="submit" value="提交">

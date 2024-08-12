@@ -19,7 +19,7 @@ use app\controller\Base;
 class Index extends Base
 {
 
-    //
+
 
     //统一查询入口
     public function search(Request $request)
@@ -50,10 +50,17 @@ class Index extends Base
                     "k" => $Content
                 ]));
                 $result3 = $server_result->data;
+                //编曲音源搜索
+                //查询数据库业务逻辑
+                $server_result= $this->get("https://www.bianqula.com/wp-admin/api/queryByKey.php?" . http_build_query([
+                    "k" => $Content
+                ]));
+                $result4 = $server_result->data;
                 View::assign("code", $server_code);
                 View::assign("result1", $result1);
                 View::assign("result2",  $result2);
                 View::assign("result3",  $result3);
+                View::assign("result4",  $result4);
                 return View::fetch('search_result');
             } else {
                 View::assign("keywords", $request->param("keywords") ?? "");
@@ -85,6 +92,7 @@ class Index extends Base
                     View::assign('downurl', ($server_result->data->down_url) ?? '');
                     View::assign('downcode', ($server_result->data->down_code) ?? '');
                     View::assign('post_title', ($server_result->data->post_title) ?? '');
+                    View::assign('adhere', ($server_result->data->adhere) ?? '');
                     View::assign('id', ($server_result->data->id) ?? '');
                 }
             } else {
@@ -121,6 +129,36 @@ class Index extends Base
         }
         return View::fetch();
     }
+
+
+    public function bianqu(Request $request)
+    {
+        View::assign('flag', false);
+        $id = $request->param("id") ?? "";
+        View::assign('id', $id);
+        View::assign('error', '');
+        if ($request->isPost()) {
+            $server_code = $this->get("https://www.switchntd.com/wp-admin/api/code.php")->data;
+            $code = $request->param("code") ?? "";
+            $id = $request->param("id") ?? "";
+            if (strtolower(trim($code)) == strtolower(trim($server_code))) {
+                if ($id) {
+                    $server_result = $this->get("https://www.bianqula.com/wp-admin/api/queryById.php?id=" . $id);
+                    View::assign('flag', true);
+                    View::assign('downurl', ($server_result->data->down_url) ?? '');
+                    View::assign('downcode', ($server_result->data->down_code) ?? '');
+                    View::assign('post_title', ($server_result->data->post_title) ?? '');
+                    View::assign('id', ($server_result->data->id) ?? '');
+                }
+            } else {
+                View::assign('error', "搜索码错误！");
+                return View::fetch();
+            }
+        }
+        return View::fetch();
+    }
+
+
     public function video_detail(Request $request)
     {
         View::assign('flag', false);
