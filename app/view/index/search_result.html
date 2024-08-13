@@ -13,10 +13,6 @@
     <script src="/static/bootstrap.bundle.min.js"
         integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
         crossorigin="anonymous"></script>
-    <script src="/static/jquery-3.7.1.min.js"></script>
-    <script src="/static/layer.js"></script>
-
-
 </head>
 
 <body>
@@ -210,20 +206,6 @@
     </div>
     </div>
 
-    <script>
-
-        const btn = document.querySelectorAll("button")
-        for (let index = 0; index < btn.length; index++) {
-            const element = btn[index];
-            element.addEventListener("click", () => {
-                element.disabled;
-                index = layer.load(1);
-                setTimeout(() => {
-                    layer.close(index)
-                }, 5000)
-            })
-        }
-    </script>
 </body>
 
 </html>
