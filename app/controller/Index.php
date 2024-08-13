@@ -52,15 +52,15 @@ class Index extends Base
                 $result3 = $server_result->data;
                 //编曲音源搜索
                 //查询数据库业务逻辑
-                $server_result= $this->get("https://www.bianqula.com/wp-admin/api/queryByKey.php?" . http_build_query([
-                    "k" => $Content
-                ]));
-                $result4 = $server_result->data;
+                // $server_result= $this->get("https://www.bianqula.com/wp-admin/api/queryByKey.php?" . http_build_query([
+                //     "k" => $Content
+                // ]));
+                // $result4 = $server_result->data;
                 View::assign("code", $server_code);
                 View::assign("result1", $result1);
                 View::assign("result2",  $result2);
                 View::assign("result3",  $result3);
-                View::assign("result4",  $result4);
+                //View::assign("result4",  $result4);
                 return View::fetch('search_result');
             } else {
                 View::assign("keywords", $request->param("keywords") ?? "");

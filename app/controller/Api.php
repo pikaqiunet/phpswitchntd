@@ -40,8 +40,6 @@ class Api extends Base
 
 
             if ($MsgType == "event") {
-
-
                 //被动
                 return json([
                     "ToUserName" => $FromUserName,
