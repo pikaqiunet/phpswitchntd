@@ -40,16 +40,19 @@ class Index extends Base
                 $result1 = $server_result->data;
                 //资源搜索
                 //查询数据库业务逻辑
-                $server_result = $this->get("https://www.switchba.com/api/v2/queryByKey.php?" .  http_build_query([
+              
+                $server_result = $this->get("https://video.switchba.com/api/v2/queryByKey.php?" .  http_build_query([
                     "k" => $Content
                 ]));
                 $result2 = $server_result->data;
+               
                 //电影搜索
                 //查询数据库业务逻辑
                 $server_result = $this->get("https://video.switchba.com/api/queryByKey.php?" .  http_build_query([
                     "k" => $Content
                 ]));
                 $result3 = $server_result->data;
+                exit;
                 // //编曲音源搜索
                 // //查询数据库业务逻辑
                 // $server_result= $this->get("https://www.bianqula.com/wp-admin/api/queryByKey.php?" . http_build_query([
