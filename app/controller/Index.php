@@ -52,8 +52,7 @@ class Index extends Base
                     "k" => $Content
                 ]));
                 $result3 = $server_result->data;
-                exit;
-                // //编曲音源搜索
+                   // //编曲音源搜索
                 // //查询数据库业务逻辑
                 // $server_result= $this->get("https://www.bianqula.com/wp-admin/api/queryByKey.php?" . http_build_query([
                 //     "k" => $Content
