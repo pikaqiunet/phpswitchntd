@@ -46,16 +46,16 @@ class Index extends Base
                 $result2 = $server_result->data;
                 //电影搜索
                 //查询数据库业务逻辑
-                $server_result = $this->get("https://www.switchba.com/api/queryByKey.php?" .  http_build_query([
+                $server_result = $this->get("https://video.switchba.com/api/queryByKey.php?" .  http_build_query([
                     "k" => $Content
                 ]));
                 $result3 = $server_result->data;
-                //编曲音源搜索
-                //查询数据库业务逻辑
+                // //编曲音源搜索
+                // //查询数据库业务逻辑
                 // $server_result= $this->get("https://www.bianqula.com/wp-admin/api/queryByKey.php?" . http_build_query([
                 //     "k" => $Content
                 // ]));
-                // $result4 = $server_result->data;
+                //$result4 = $server_result->data;
                 View::assign("code", $server_code);
                 View::assign("result1", $result1);
                 View::assign("result2",  $result2);
@@ -171,7 +171,7 @@ class Index extends Base
             $id = $request->param("id") ?? "";
             if (strtolower(trim($code)) == strtolower(trim($server_code))) {
                 if ($id) {
-                    $server_result = $this->get("https://www.switchba.com/api/queryById.php?id=" . $id);
+                    $server_result = $this->get("https://video.switchba.com/api/queryById.php?id=" . $id);
                     $data = $server_result->data;
                     $title = $data->post_title;
                     $url = $data->post_url;
