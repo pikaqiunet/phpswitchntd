@@ -42,13 +42,6 @@ class Index extends Base
                     "k" => $Content
                 ]));
                 $result2 = $server_result->data;
-
-                //电影搜索
-                //查询数据库业务逻辑
-                $server_result = $this->get("https://www.switchntd.com/api/queryByKey.php?" .  http_build_query([
-                    "k" => $Content
-                ]));
-                $result3 = $server_result->data;
                 //编曲音源搜索
                 //查询数据库业务逻辑
                 $server_result= $this->get("https://www.bianqula.com/wp-admin/api/queryByKey.php?" . http_build_query([
@@ -58,7 +51,6 @@ class Index extends Base
                 View::assign("code", $server_code);
                 View::assign("result1", $result1);
                 View::assign("result2",  $result2);
-                View::assign("result3",  $result3);
                 View::assign("result4",  $result4);
                 return View::fetch('search_result');
             } else {
@@ -155,52 +147,5 @@ class Index extends Base
             }
         }
         return View::fetch();
-    }
-
-
-    public function video_detail(Request $request)
-    {
-        View::assign('flag', false);
-        $id = $request->param("id") ?? "";
-        View::assign('id', $id);
-        View::assign('error', '');
-        if ($request->isPost()) {
-            $server_code = $this->get("https://www.switchntd.com/wp-admin/api/code.php")->data;
-            $code = $request->param("code") ?? "";
-            $id = $request->param("id") ?? "";
-            if (strtolower(trim($code)) == strtolower(trim($server_code))) {
-                if ($id) {
-                    $server_result = $this->get("https://www.switchntd.com/api/queryById.php?id=" . $id);
-                    $data = $server_result->data;
-                    $title = $data->post_title;
-                    $url = $data->post_url;
-                    $vod_play_url = $data->vod_play_url;
-                    $vod_play_url = explode("#", $vod_play_url);
-                    $vod_play_url_arr = [];
-                    foreach ($vod_play_url as $value) {
-                        $tmp = [];
-                        $arr = explode('$', $value);
-                        $tmp[] = $arr[0];
-                        $tmp[] = $arr[1];
-                        $vod_play_url_arr[] = $tmp;
-                    }
-                    View::assign('title', $title);
-                    View::assign('url', $url);
-                    View::assign('vod_play_url_arr', $vod_play_url_arr);
-                    View::assign('flag', true);
-                    return View::fetch('video_detail');
-                }
-            } else {
-                View::assign('error', "搜索码错误！");
-                return View::fetch('video_detail');
-            }
-        }
-        return View::fetch('video_detail');
-    }
-
-    public function video(Request $request)
-    {
-        $url = $request->param("url") ?? "";
-        echo $this->get_video($url);
     }
 }

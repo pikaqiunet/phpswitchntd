@@ -30,8 +30,6 @@
                         <div class="nav-link" id="nav-profile-tab" style="margin-right: 5px;" data-bs-toggle="tab"
                             data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
                             aria-selected="false">资源类</div>
-                        <div class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
-                            type="button" role="tab" aria-controls="nav-contact" aria-selected="false">影视类</div>
                         <div class="nav-link" id="nav-bq-tab" data-bs-toggle="tab" data-bs-target="#nav-bq"
                             type="button" role="tab" aria-controls="nav-contact" aria-selected="false">编曲类</div>
                     </div>
@@ -39,8 +37,6 @@
             </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
-
-
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
 
                     <div class="alert alert-warning mt-2 " role="alert">
@@ -109,44 +105,6 @@
                                         <input type="hidden" name="code" value="{$code}">
                                         <button type="submit" class="btn btn-dark">查看</button>
                                     </form>
-                                </td>
-                            </tr>
-                            {/foreach}
-                        </tbody>
-                    </table>
-
-                    {/if}
-
-                </div>
-                <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-
-                    <div class="alert alert-info mt-3" role="alert">
-                        电影、动漫的查询结果:
-                    </div>
-                    {if $result3 }
-
-
-                    <table class="table table-hover table-striped ">
-                        <thead>
-                            <tr>
-                                <th scope="col">名称</th>
-                                <th scope="col" style="min-width: 74px;">操作</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {foreach $result3 as $key => $vo}
-                            <tr>
-                                <td>
-                                    {$vo->post_title}
-                                </td>
-
-                                <td>
-                                    <form action="/index/video_detail" method="post">
-                                        <input type="hidden" name="id" value="{$vo->id}">
-                                        <input type="hidden" name="code" value="{$code}">
-                                        <button type="submit" id="button" class="btn btn-dark">查看</button>
-                                    </form>
-
                                 </td>
                             </tr>
                             {/foreach}
