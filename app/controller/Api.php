@@ -75,6 +75,7 @@ class Api extends Base
                     "MsgType" => $MsgType,
                     "Content" => "“" .  $Content . "”" . "的查询结果如下" . "\n" . $caolianjie
                 ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+                
             }
         }
     }
